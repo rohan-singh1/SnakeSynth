@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>mainWidget</class>
  <widget class="QWidget" name="mainWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>620</width>
+    <height>277</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
@@ -154,7 +162,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QDial" name="dial_2">
+               <widget class="QDial" name="volume_knob">
                 <property name="notchTarget">
                  <double>10.000000000000000</double>
                 </property>
@@ -178,7 +186,7 @@
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
-               <widget class="QDial" name="dial">
+               <widget class="QDial" name="tone_knob">
                 <property name="wrapping">
                  <bool>false</bool>
                 </property>
