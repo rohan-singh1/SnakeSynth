@@ -47,10 +47,11 @@ NOTE_FREQS = {
     ";": 554.37,   # C#5/Db5
     "'": 587.33    # D5
 }
-duration = 0.1
+
 # sampling frequency
 fs = 44100
-
+amplitude = 1
+duration = 0.1
 # Initialize PyAudio
 p = pyaudio.PyAudio()
 
@@ -63,12 +64,10 @@ def play_tone(freq, duration):
 # If an error occurs while opening the stream, it prints the error message.
 
     # Generate the sine wave
-    sine = SineOscillator(duration=duration, frequency=freq, sampleRate=fs)
-    #samples = sine.generateWave().astype(np.float32)
-    samples = (np.sin(2*np.pi* np.arange(p.get_sample_size(format=pyaudio.paFloat32)*fs*duration) *freq/fs)).astype(np.float32)
+    sine = SineOscillator(duration=duration, frequency=freq, sampleRate=fs, amplitude=amplitude)
+    samples = sine.generateWave().astype(np.float32)
     # Generate the sine wave
     #step_size = 2*np.pi*freq/fs   # angular frequency or step size = (2*pi*f)/sample_rate
-
     #samples = (amplitude*np.sin(step_size*np.arange(p.get_sample_size(format=pyaudio.paFloat32)*fs*duration))).astype(np.float32)
 
     # Open the audio stream
