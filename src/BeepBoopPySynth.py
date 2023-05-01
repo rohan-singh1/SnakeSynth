@@ -8,7 +8,7 @@
 # Copyright:   (c) Yoozer 2023
 # Licence:     <License to Thrill>
 #-------------------------------------------------------------------------------
-from oscillator import SineOscillator
+from oscillator import SineOscillator, SquareOscillator
 # So far this program hates bluetooh.f I think the headset sleeps between beeps or something
 
 import numpy as np
@@ -64,8 +64,10 @@ def play_tone(freq, duration):
 # If an error occurs while opening the stream, it prints the error message.
 
     # Generate the sine wave
-    sine = SineOscillator(duration=duration, frequency=freq, sampleRate=fs, amplitude=amplitude)
-    samples = sine.generateWave().astype(np.float32)
+    #sine = SineOscillator(duration=duration, frequency=freq, sampleRate=fs, amplitude=amplitude)
+    square = SquareOscillator(duration=duration, frequency=freq, sampleRate=fs, amplitude=amplitude)
+    #samples = sine.generateWave().astype(np.float32)
+    samples = square.generateWave().astype(np.float32)
     # Generate the sine wave
     #step_size = 2*np.pi*freq/fs   # angular frequency or step size = (2*pi*f)/sample_rate
     #samples = (amplitude*np.sin(step_size*np.arange(p.get_sample_size(format=pyaudio.paFloat32)*fs*duration))).astype(np.float32)

@@ -21,9 +21,31 @@ class SineOscillator(Oscillator):
         super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
     
     def generateWave(self):
-        #return self._amplitude * np.sin(self._pitchCoefficient * np.pi * self._frequency * self._time)
         return self._amplitude * np.sin(self._stepSize * self._time)
 
+class SquareOscillator(SineOscillator):
+    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max//4, duration=1.0):
+        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    
+    def generateWave(self):
+        sin_wave = super().generateWave() # generate a sine wave using the parent class method
+        square_wave = np.where(sin_wave >= 0, self._amplitude, -self._amplitude) # create a square wave by applying a threshold
+        square_wave[int(len(square_wave) * self._duty_cycle):] = -self._amplitude # apply duty cycle
+        return square_wave
+'''
+class TriangleOscillator(Oscillator):
+    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max//4, duration=1.0):
+        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    
+    def generateWave(self):
+        pass
+class SawtoothOscillator(Oscillator):
+    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max//4, duration=1.0):
+        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    
+    def generateWave(self):
+        pass
+'''
 if __name__ == "__main__":
     sine = SineOscillator()
     wave = sine.generateWave()
