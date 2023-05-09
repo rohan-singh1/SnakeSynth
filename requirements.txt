@@ -1,4 +1,3 @@
 PySide6
 SciPy
 NumPy
-PyQt6
