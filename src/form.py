@@ -9,10 +9,9 @@ from oscillator import SineOscillator as sine, SquareOscillator as square, Trian
 
 
 
-dur = 5
-sampleRate = 48000
-amplitude = 8912
-duration = 1.0
+SAMPLE_RATE = 48000
+AMPLITUDE = 8912
+DURATION = 5.0
 
 # Define note frequencies
 NOTE_FREQS = {
@@ -75,9 +74,10 @@ NOTE_FREQS = {
 #{"A4" : SineOscillator
 # ...
 # }
+#Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
 sineWaves = {}
 for key in NOTE_FREQS:
-    sineWaves[key] = saw(NOTE_FREQS[key],sampleRate, amplitude, duration)
+    sineWaves[key] = sine(NOTE_FREQS[key],SAMPLE_RATE, AMPLITUDE, DURATION)
 
 class MainWidget(QWidget):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
     def __init__(self):
@@ -98,7 +98,7 @@ class MainWidget(QWidget):  ### defines a class named MainWidget that inherits f
         for key in keys:
             note = key.objectName()
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
-            key.released.connect(lambda: self.button_released_handler)
+            key.released.connect(self.button_released_handler)
 
         win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 

@@ -85,23 +85,3 @@ class SawtoothOscillator(Oscillator):
             samples[x] = 2 * np.fmod(((x * self._frequency * self._amplitude)/ self._sampleRate)+self._amplitude/2, self._amplitude) - self._amplitude
 
         return samples
-
-
-if __name__ == "__main__":
-    frequency = 880
-    sampleRate = 48000
-    amplitude=np.iinfo(np.int16).max/4
-    duration=1.0
-
-    sine = SineOscillator(frequency, sampleRate, amplitude, duration)
-    square = SquareOscillator(frequency, sampleRate, amplitude, duration)
-    triangle = TriangleOscillator(frequency, sampleRate, amplitude, duration)
-    sawtooth = SawtoothOscillator(frequency, sampleRate, amplitude, duration)
-
-    wave = sawtooth.generateWave().astype(np.int16)
-
-    plot.plot( sawtooth._time[:100], wave[:100])
-    plot.show()
-    
-    sd.play(wave, triangle._sampleRate)
-    sd.wait()
