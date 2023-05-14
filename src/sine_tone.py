@@ -3,6 +3,25 @@ import numpy as np
 import sounddevice as sd
 
 
+# sampling frequency needs to be available to all functions 
+fs = 48000
+amplitude_default = 1    # set a default amplitude for all wave functions 
+
+# Generate the sine wave
+def oscillator_sine(freq, dur):
+    # Set parameters for the sine wave
+
+    time_array = np.arange(0, dur, 1 / fs)
+    sine_wave = np.sin(2 * np.pi * freq * time_array)
+
+    #Apply fade-out effect
+    fade_out_duration = 0.5  # in seconds
+    fade_out_samples = int(fade_out_duration * fs)
+    fade_out_array = np.linspace(1, 0, fade_out_samples)
+    sine_wave[-fade_out_samples:] *= fade_out_array
+
+    sd.play(sine_wave, fs)
+
 def play_sine (pitch_coefficient):
 
     # Sine wave generation sourced from:
