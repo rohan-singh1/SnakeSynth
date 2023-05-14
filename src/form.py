@@ -7,7 +7,12 @@ from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
 from oscillator import SineOscillator as sine, SquareOscillator as square, TriangleOscillator as triangle, SawtoothOscillator as saw
 
-dur = .5
+
+
+dur = 5
+sampleRate = 48000
+amplitude = 8912
+duration = 1.0
 
 # Define note frequencies
 NOTE_FREQS = {
@@ -66,6 +71,14 @@ NOTE_FREQS = {
     "C6": 1046.50   # C6
 }
 
+#generate a oscillator for each key inside a dictionary
+#{"A4" : SineOscillator
+# ...
+# }
+sineWaves = {}
+for key in NOTE_FREQS:
+    sineWaves[key] = saw(NOTE_FREQS[key],sampleRate, amplitude, duration)
+
 class MainWidget(QWidget):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
     def __init__(self):
         super(MainWidget, self).__init__()
@@ -87,12 +100,19 @@ class MainWidget(QWidget):  ### defines a class named MainWidget that inherits f
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
             key.released.connect(lambda: self.button_released_handler)
 
+        win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 
-    def button_pressed_handler(self, key):   # Define a method for handling button releases
-        print(key)
-        sine_tone.oscillator_sine(NOTE_FREQS[key], dur)   # Call the play_sine method from the sine_tone module to start playing a sine tone
-        #array.
+        return win
+    
+    # Define a method for handling button releases
+    def button_pressed_handler(self, key):   
+        #Play the oscillator corresponding to a key
+        sineWaves[key].play()  
 
-    def button_released_handler(self):   # Define a method for handling the press of a second button
-        sine_tone.stop_playing()   # Call the stop_playing method from the sine_tone module to stop playing the sine tone
+    def button_released_handler(self):
+        #Stop the oscillator
+        sineWaves[key].stop()  
+    
+    def handle_volume_changed(value):
+        print("Current volume: ", MainWidget.win.volume_knob.value())
  
