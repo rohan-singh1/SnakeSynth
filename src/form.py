@@ -1,4 +1,5 @@
 import os
+
 from pathlib import Path
 from PySide6.QtWidgets import QWidget, QFrame, QPushButton
 from PySide6.QtCore import QFile
@@ -6,10 +7,22 @@ from PySide6.QtUiTools import QUiLoader
 from oscillator import SineOscillator as sine, SquareOscillator as square, TriangleOscillator as triangle, SawtoothOscillator as saw
 
 
+class Volume():
+    def __init__(self, setting=9, offset=9):
+        self._setting = setting
+        self._offset = offset
+        self._volume = self.calc_gain(self._setting)
+
+    def calc_gain(self, setting):
+        if setting < 0.1:
+            return 0
+        db = 3.0 * (setting - self._offset)
+        return pow(10.0 , db / 20.0)
+
 
 SAMPLE_RATE = 48000
-AMPLITUDE = 8192
-DURATION = 1.0
+MAX_AMPLITUDE = 8192
+DURATION = 5.0
 
 # Define note frequencies
 NOTE_FREQS = {
@@ -75,7 +88,7 @@ NOTE_FREQS = {
 #Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
 sineWaves = {}
 for key in NOTE_FREQS:
-    sineWaves[key] = sine(NOTE_FREQS[key],SAMPLE_RATE, AMPLITUDE, DURATION)
+    sineWaves[key] = sine(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
 
 class MainWidget(QWidget):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
     def __init__(self):
@@ -98,6 +111,7 @@ class MainWidget(QWidget):  ### defines a class named MainWidget that inherits f
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
             key.released.connect(self.button_released_handler)
 
+        win.volume_knob.setValue(90)
         win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 
         return win
@@ -111,6 +125,12 @@ class MainWidget(QWidget):  ### defines a class named MainWidget that inherits f
         #Stop the oscillator
         sineWaves[key].stop()  
     
-    def handle_volume_changed(value):
-        print("Current volume: ", MainWidget.win.volume_knob.value())
+    def handle_volume_changed(self):
+        setting = MainWidget.win.volume_knob.value() / 10.0
+        vol = Volume()
+        gain = vol.calc_gain(setting)
+        for key in NOTE_FREQS:
+            sineWaves[key].change_gain(gain)
+
+
  
