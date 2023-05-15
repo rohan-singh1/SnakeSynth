@@ -10,7 +10,7 @@ from oscillator import SineOscillator as sine, SquareOscillator as square, Trian
 
 
 SAMPLE_RATE = 48000
-AMPLITUDE = 8912
+AMPLITUDE = 8192
 DURATION = 5.0
 
 # Define note frequencies
