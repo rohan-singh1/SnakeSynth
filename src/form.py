@@ -5,19 +5,8 @@ from PySide6.QtWidgets import QWidget, QFrame, QPushButton
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
 from oscillator import SineOscillator as sine, SquareOscillator as square, TriangleOscillator as triangle, SawtoothOscillator as saw
+from volume import Volume
 
-
-class Volume():
-    def __init__(self, setting=9, offset=9):
-        self._setting = setting
-        self._offset = offset
-        self._volume = self.calc_gain(self._setting)
-
-    def calc_gain(self, setting):
-        if setting < 0.1:
-            return 0
-        db = 3.0 * (setting - self._offset)
-        return pow(10.0 , db / 20.0)
 
 
 SAMPLE_RATE = 48000
@@ -88,7 +77,7 @@ NOTE_FREQS = {
 #Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
 sineWaves = {}
 for key in NOTE_FREQS:
-    sineWaves[key] = sine(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
+    sineWaves[key] = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
 
 class MainWidget(QWidget):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
     def __init__(self):
@@ -128,7 +117,8 @@ class MainWidget(QWidget):  ### defines a class named MainWidget that inherits f
     def handle_volume_changed(self):
         setting = MainWidget.win.volume_knob.value() / 10.0
         vol = Volume()
-        gain = vol.calc_gain(setting)
+        vol.set_setting(setting)
+        gain = vol.gain()
         for key in NOTE_FREQS:
             sineWaves[key].change_gain(gain)
 
