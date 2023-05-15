@@ -19,7 +19,7 @@ class Oscillator(ABC):
         pass
 
     def play(self):
-        sd.play(self._samples, self._sampleRate)
+        sd.play(self._samples.astype(np.int16), self._sampleRate)
     
     def stop(self):
         sd.stop()
