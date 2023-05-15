@@ -1,6 +1,4 @@
 import os
-import sine_tone
-
 from pathlib import Path
 from PySide6.QtWidgets import QWidget, QFrame, QPushButton
 from PySide6.QtCore import QFile
@@ -11,7 +9,7 @@ from oscillator import SineOscillator as sine, SquareOscillator as square, Trian
 
 SAMPLE_RATE = 48000
 AMPLITUDE = 8192
-DURATION = 5.0
+DURATION = 1.0
 
 # Define note frequencies
 NOTE_FREQS = {
