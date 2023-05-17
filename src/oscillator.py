@@ -4,6 +4,8 @@ import sounddevice as sd
 import matplotlib.pyplot as plot
 import pyaudio
 
+'''Design idea from:
+https://python.plainenglish.io/making-a-synth-with-python-oscillators-2cb8e68e9c3b'''
 class Oscillator(ABC):
     def __init__(self, frequency=220.0, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
         p = pyaudio.PyAudio()
