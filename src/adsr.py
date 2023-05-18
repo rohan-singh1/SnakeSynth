@@ -11,7 +11,7 @@ class ADSREnvelope:
         self._release = releaseDuration
         self._sampleRate = sampleRate
         self._originalWave = wave
-        self._envelope = np.ones(len(self._originalWave)) #blank envelope
+        self._envelope = np.ones(self._originalWave) #blank envelope
         self._createEnvelope()
         self._modulatedWave = self.applyEnvelope()
     
