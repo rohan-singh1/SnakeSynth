@@ -7,14 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>610</width>
-    <height>310</height>
+    <height>313</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Snake Synth</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(20, 20, 20, 255), stop:1 rgba(80, 80, 80, 255));</string>
+   <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(10, 10, 10, 255), stop:1 rgba(80, 80, 80, 255));
+border-radius: 4px;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <property name="spacing">
@@ -42,7 +43,7 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame {
-	border-radius: 3px;
+	border-radius: 4px;
 	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(40, 40, 40, 255), stop:0 rgba(50, 50, 50, 255));
 	border: 1px solid;
 	border-color: rgb(83, 83, 83);
@@ -56,16 +57,16 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="spacing">
-       <number>10</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
        <number>5</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>5</number>
@@ -84,7 +85,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -101,13 +102,41 @@
           <number>0</number>
          </property>
          <item>
+          <widget class="QLabel" name="tonelabel_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Wave</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="wave_groupBox">
            <property name="styleSheet">
             <string notr="true">color: rgb(239, 236, 231);
-background-color: rgba(255, 255, 255, 0);</string>
+background-color: rgba(255, 255, 255, 0);
+border:none;</string>
            </property>
            <property name="title">
-            <string>Wave</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -167,8 +196,37 @@ background-color: rgba(255, 255, 255, 0);</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-padding: 5px;</string>
+                  <string notr="true">QRadioButton {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+padding: 5px;
+spacing: 10px;
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(100, 100, 100, 255));
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
                  </property>
                  <property name="text">
                   <string>Sine</string>
@@ -193,8 +251,37 @@ padding: 5px;</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-padding: 5px;</string>
+                  <string notr="true">QRadioButton {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+padding: 5px;
+spacing: 10px;
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(100, 100, 100, 255));
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
                  </property>
                  <property name="text">
                   <string>Triangle</string>
@@ -216,8 +303,37 @@ padding: 5px;</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-padding: 5px;</string>
+                  <string notr="true">QRadioButton {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+padding: 5px;
+spacing: 10px;
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(100, 100, 100, 255));
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
                  </property>
                  <property name="text">
                   <string>Square</string>
@@ -239,8 +355,37 @@ padding: 5px;</string>
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
-padding: 5px;</string>
+                  <string notr="true">QRadioButton {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:1 rgba(80, 80, 80, 255));
+padding: 5px;
+spacing: 10px;
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:1 rgba(100, 100, 100, 255));
+border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
                  </property>
                  <property name="text">
                   <string>Sawtooth</string>
@@ -264,72 +409,58 @@ padding: 5px;</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>180</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
+        <layout class="QGridLayout" name="gridLayout_2">
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QGroupBox" name="pitch_groupBox">
+         <property name="horizontalSpacing">
+          <number>5</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>0</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="QDoubleSpinBox" name="pitch_doubleSpinBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(239, 236, 231);
-background-color: rgba(255, 255, 255, 0);</string>
-           </property>
-           <property name="title">
-            <string>Pitch Adjust</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>5</number>
-            </property>
-            <property name="topMargin">
-             <number>5</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>5</number>
-            </property>
-            <item>
-             <widget class="QDoubleSpinBox" name="pitch_doubleSpinBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgba(255, 255, 255, 100);
+            <string notr="true">color: rgba(255, 255, 255, 100);
 background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(30, 30, 30, 255), stop:1 rgba(50, 50, 50, 255));
 border-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));
 border-radius: 3px;
@@ -346,38 +477,59 @@ border: none;
 	background-color: rgb(155, 155, 155);
 	background-color: rgb(255, 3, 0);
 }</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDial" name="pitch_knob">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>120</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
-              </property>
-              <property name="wrapping">
-               <bool>false</bool>
-              </property>
-              <property name="notchTarget">
-               <double>10.000000000000000</double>
-              </property>
-              <property name="notchesVisible">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDial" name="pitch_knob">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>68</width>
+             <height>91</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Pitch Adjust</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
         </layout>
@@ -391,6 +543,12 @@ border: none;
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -402,13 +560,13 @@ border: none;
           <number>5</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -470,6 +628,12 @@ border: none;</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -481,13 +645,13 @@ border: none;</string>
           <number>5</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
