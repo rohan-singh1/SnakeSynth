@@ -2,7 +2,6 @@
 https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6dad81'''
 
 import numpy as np
-
 class ADSREnvelope:
     def __init__(self, wave, attackDuration=0.05, decayDuration=0.2, sustainLevel=0.7, releaseDuration=0.3, sampleRate=48000):
         self._attack = attackDuration
@@ -11,7 +10,7 @@ class ADSREnvelope:
         self._release = releaseDuration
         self._sampleRate = sampleRate
         self._originalWave = wave
-        self._envelope = np.ones(self._originalWave) #blank envelope
+        self._envelope = np.ones_like(self._originalWave) #blank envelope
         self._createEnvelope()
         self._modulatedWave = self.applyEnvelope()
     
@@ -29,5 +28,6 @@ class ADSREnvelope:
         self._envelope[attackSamples+decaySamples+sustainSamples:] = np.linspace(self._sustain, 0, releaseSamples)
     
     def applyEnvelope(self):
-        return self._originalWave * self._envelope
+        normalized_wave = self._originalWave / np.max(np.abs(self._originalWave)) 
+        return normalized_wave * self._envelope
     

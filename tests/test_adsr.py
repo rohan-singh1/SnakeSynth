@@ -9,7 +9,7 @@ import pytest
 @pytest.fixture
 def sample_wave():
     t= np.linspace(0, 2.0, int(48000 * 2.0), endpoint=False)
-    return 0.5 * np.sin(2 * np.pi * 440 * t)
+    return 0.5 * np.sin(2.0 * np.pi * 440.0 * t)
 
 def test_applyEnvelope(sample_wave):
     # Create an instance of ADSREnvelope
@@ -33,7 +33,9 @@ def test_applyEnvelope(sample_wave):
     ))
 
     assert np.array_equal(envelope._envelope, expected_envelope)
-    assert np.array_equal(envelope._modulatedWave, sample_wave * expected_envelope)
+
+    normalized_wave = sample_wave / np.max(np.abs(sample_wave)) 
+    assert np.array_equal(envelope._modulatedWave, normalized_wave * expected_envelope)
 
 def test_applyEnvelope_with_custom_parameters(sample_wave):
     # Create an instance of ADSREnvelope with custom parameters
@@ -57,7 +59,9 @@ def test_applyEnvelope_with_custom_parameters(sample_wave):
     ))
 
     assert np.array_equal(envelope._envelope, expected_envelope)
-    assert np.array_equal(envelope._modulatedWave, sample_wave * expected_envelope)
+
+    normalized_wave = sample_wave / np.max(np.abs(sample_wave)) 
+    assert np.array_equal(envelope._modulatedWave, normalized_wave * expected_envelope)
 
 def test_default_sample_rate(sample_wave):
     # Create an instance of ADSREnvelope with the default sample rate
