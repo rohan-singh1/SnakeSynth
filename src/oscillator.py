@@ -1,13 +1,22 @@
 from abc import ABC
 import numpy as np
 import sounddevice as sd
-import matplotlib.pyplot as plot
+
+# import matplotlib.pyplot as plot
 import pyaudio
 
-'''Design idea from:
-https://python.plainenglish.io/making-a-synth-with-python-oscillators-2cb8e68e9c3b'''
+"""Design idea from:
+https://python.plainenglish.io/making-a-synth-with-python-oscillators-2cb8e68e9c3b"""
+
+
 class Oscillator(ABC):
-    def __init__(self, frequency=220.0, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
+    def __init__(
+        self,
+        frequency=220.0,
+        sampleRate=48000,
+        amplitude=np.iinfo(np.int16).max / 4,
+        duration=1.0,
+    ):
         p = pyaudio.PyAudio()
         self._frequency: float = frequency
         self._sampleRate: int = sampleRate
@@ -25,27 +34,36 @@ class Oscillator(ABC):
         sd.play(self._gainedSamples.astype(np.int16), self._sampleRate)
         print(self._samples[-1])
 
-    #Crop the samples to the final zero crossing, so that the end of a wave match up with the beginning
-    #Side effects: final signal is very slightly shorter.
+    # Crop the samples to the final zero crossing, so that the end of a wave match up with the beginning
+    # Side effects: final signal is very slightly shorter.
     def crop_samples(self, samples):
-        samplesPerPeriod = (self._sampleRate / self._frequency)
+        samplesPerPeriod = self._sampleRate / self._frequency
         remainder = round(self._time.size % samplesPerPeriod)
 
-        return samples[0:self._time.size - remainder]
+        return samples[0 : self._time.size - remainder]
 
-    
     def stop(self):
         sd.stop()
 
 
-
-#SINE OSCILLATOR
+# SINE OSCILLATOR
 class SineOscillator(Oscillator):
-    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
-        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    def __init__(
+        self,
+        frequency=440,
+        sampleRate=48000,
+        amplitude=np.iinfo(np.int16).max / 4,
+        duration=1.0,
+    ):
+        super().__init__(
+            frequency=frequency,
+            sampleRate=sampleRate,
+            amplitude=amplitude,
+            duration=duration,
+        )
         self._samples = self.generateWave()
         self._gainedSamples = self._samples
-    
+
     def generateWave(self):
         samples = self._amplitude * np.sin(self._stepSize * self._time)
 
@@ -53,12 +71,22 @@ class SineOscillator(Oscillator):
 
 
 class SquareOscillator(SineOscillator):
-    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
-        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    def __init__(
+        self,
+        frequency=440,
+        sampleRate=48000,
+        amplitude=np.iinfo(np.int16).max / 4,
+        duration=1.0,
+    ):
+        super().__init__(
+            frequency=frequency,
+            sampleRate=sampleRate,
+            amplitude=amplitude,
+            duration=duration,
+        )
         self._samples = self.generateWave()
         self._gainedSamples = self._samples
 
-    
     def generateWave(self):
         samples = np.sin(self._stepSize * self._time)
         for x in self._time:
@@ -70,32 +98,60 @@ class SquareOscillator(SineOscillator):
         return self.crop_samples(samples)
 
 
-#TRIANGLE OSCILLATOR
-#Source: https://stackoverflow.com/questions/1073606/is-there-a-one-line-function-that-generates-a-triangle-wave
+# TRIANGLE OSCILLATOR
+# Source: https://stackoverflow.com/questions/1073606/is-there-a-one-line-function-that-generates-a-triangle-wave
 class TriangleOscillator(Oscillator):
-    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
-        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    def __init__(
+        self,
+        frequency=440,
+        sampleRate=48000,
+        amplitude=np.iinfo(np.int16).max / 4,
+        duration=1.0,
+    ):
+        super().__init__(
+            frequency=frequency,
+            sampleRate=sampleRate,
+            amplitude=amplitude,
+            duration=duration,
+        )
         self._samples = self.generateWave()
         self._gainedSamples = self._samples
 
     def generateWave(self):
-        samples = np.empty(int(self._sampleRate*self._duration), dtype=float)
+        samples = np.empty(int(self._sampleRate * self._duration), dtype=float)
 
-        #half-period
+        # half-period
         hp = (1 / self._frequency) / 2
 
-        #double the amplitude
+        # double the amplitude
         da = self._amplitude * 2
 
         for x in self._time:
-            samples[x] =  da/hp * (hp - np.abs(np.mod(x/self._sampleRate + hp/2,(2*hp))-hp)) - self._amplitude
-        
+            samples[x] = (
+                da
+                / hp
+                * (hp - np.abs(np.mod(x / self._sampleRate + hp / 2, (2 * hp)) - hp))
+                - self._amplitude
+            )
+
         return self.crop_samples(samples)
 
-#SAW TOOTH OSCILLATOR
+
+# SAW TOOTH OSCILLATOR
 class SawtoothOscillator(Oscillator):
-    def __init__(self, frequency=440, sampleRate=48000, amplitude=np.iinfo(np.int16).max/4, duration=1.0):
-        super().__init__(frequency=frequency, sampleRate=sampleRate, amplitude=amplitude, duration=duration)
+    def __init__(
+        self,
+        frequency=440,
+        sampleRate=48000,
+        amplitude=np.iinfo(np.int16).max / 4,
+        duration=1.0,
+    ):
+        super().__init__(
+            frequency=frequency,
+            sampleRate=sampleRate,
+            amplitude=amplitude,
+            duration=duration,
+        )
         self._samples = self.generateWave()
         self._gainedSamples = self._samples
 
@@ -103,6 +159,14 @@ class SawtoothOscillator(Oscillator):
         samples = np.arange(self._sampleRate * self._duration)
 
         for x in self._time:
-            samples[x] = 2 * np.fmod(((x * self._frequency * self._amplitude)/ self._sampleRate)+self._amplitude/2, self._amplitude) - self._amplitude
+            samples[x] = (
+                2
+                * np.fmod(
+                    ((x * self._frequency * self._amplitude) / self._sampleRate)
+                    + self._amplitude / 2,
+                    self._amplitude,
+                )
+                - self._amplitude
+            )
 
         return self.crop_samples(samples)
