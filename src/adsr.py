@@ -18,11 +18,12 @@ class ADSREnvelope:
         releaseSamples = int(self._release * self._sampleRate)
         sustainSamples = len(wave) - attackSamples - decaySamples - releaseSamples
 
+
         envelope = np.ones(len(wave))
         envelope[:attackSamples] = np.linspace(0, 1, self._attack)
         envelope[attackSamples:attackSamples+decaySamples] = np.linspace(1, self._sustain, self._decay)
-        envelope[attackSamples+decaySamples:attackSamples+decaySamples+releaseSamples] = self._sustain
-        envelope[attackSamples+decaySamples+releaseSamples:] = np.linspace(self._sustain, 0, self._release)
+        envelope[attackSamples+decaySamples:attackSamples+decaySamples+sustainSamples] = self._sustain
+        envelope[attackSamples+decaySamples+sustainSamples:] = np.linspace(self._sustain, 0, self._release)
 
         return wave * envelope
 
