@@ -23,11 +23,12 @@ def test_applyEnvelope(sample_wave):
     expected_envelope = np.concatenate((
         np.linspace(0, 1, attack_samples),
         np.linspace(1, envelope._sustain, decay_samples),
-        np.full(sustain_samples, envelope._sustain),
+        np.full((sustain_samples, ), envelope._sustain),
         np.linspace(envelope._sustain, 0, release_samples)
     ))
 
     assert np.array_equal(envelope._envelope, expected_envelope)
+    assert np.array_equal(envelope._modulatedWave, sample_wave * expected_envelope)
 
 def test_applyEnvelope_with_custom_parameters(sample_wave):
     # Create an instance of ADSREnvelope with custom parameters
@@ -47,3 +48,4 @@ def test_applyEnvelope_with_custom_parameters(sample_wave):
     ))
 
     assert np.array_equal(envelope._envelope, expected_envelope)
+    assert np.array_equal(envelope._modulatedWave, sample_wave * expected_envelope)

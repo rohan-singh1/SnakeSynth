@@ -10,22 +10,24 @@ class ADSREnvelope:
         self._sustain = sustainLevel
         self._release = releaseDuration
         self._sampleRate = sampleRate
-        self._wave = wave
-        self._envelope = np.ones(len(wave)) #blank envelope
-        self._applyEnvelope()
+        self._originalWave = wave
+        self._envelope = np.ones(len(self._originalWave)) #blank envelope
+        self._createEnvelope()
+        self._modulatedWave = self.applyEnvelope()
     
-    def _applyEnvelope(self):
+    def _createEnvelope(self):
         #Not sure I need this variable...
-        #duration = len(self._wave) / self._sampleRate
+        #duration = len(self._originalWave) / self._sampleRate
         attackSamples = int(self._attack * self._sampleRate)
         decaySamples = int(self._decay * self._sampleRate)
         releaseSamples = int(self._release * self._sampleRate)
-        sustainSamples = len(self._wave) - attackSamples - decaySamples - releaseSamples
+        sustainSamples = len(self._originalWave) - attackSamples - decaySamples - releaseSamples
 
         self._envelope[:attackSamples] = np.linspace(0, 1, attackSamples)
         self._envelope[attackSamples:attackSamples+decaySamples] = np.linspace(1, self._sustain, decaySamples)
         self._envelope[attackSamples+decaySamples:attackSamples+decaySamples+sustainSamples] = self._sustain
         self._envelope[attackSamples+decaySamples+sustainSamples:] = np.linspace(self._sustain, 0, releaseSamples)
-
-        return self._wave * self._envelope
+    
+    def applyEnvelope(self):
+        return self._originalWave * self._envelope
     
