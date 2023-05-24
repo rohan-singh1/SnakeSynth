@@ -882,7 +882,7 @@ background-color: rgba(255, 255, 255, 0);
 border: none;</string>
            </property>
            <property name="text">
-            <string>Pitch Adjust</string>
+            <string>Pitch</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
