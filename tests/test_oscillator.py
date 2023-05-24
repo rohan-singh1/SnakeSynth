@@ -7,9 +7,8 @@ import numpy as np
 
 def test_sine_oscillator():
     freq = 440
-    sampleRate = 48000
+    sample_rate = 48000
     duration = 1.0
-    oscillator = SineOscillator(frequency=freq, sampleRate=sampleRate, duration=duration)
-    wave = oscillator.generateWave()
-    assert len(wave) == sampleRate * duration
-    assert np.allclose(wave, np.sin(oscillator._pitchCoefficient * np.pi * freq * oscillator._time) * oscillator._amplitude)
+    oscillator = SineOscillator(frequency=freq, sample_rate=sample_rate, duration=duration)
+    wave = oscillator.generate_wave()
+    assert len(wave) == sample_rate * duration

@@ -27,28 +27,28 @@ DEFAULT_VOLUME_OFFSET = 9
 # Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
 gained_waves = {}
 
-sineWaves = {}
+sine_waves = {}
 for key in NOTE_FREQS:
     oscillator = sine(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    sineWaves[key] = oscillator.generateWave()
+    sine_waves[key] = oscillator.generate_wave()
 
-squareWaves = {}
+square_waves = {}
 for key in NOTE_FREQS:
     oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    squareWaves[key] = oscillator.generateWave()
+    square_waves[key] = oscillator.generate_wave()
 
-sawWaves = {}
+saw_waves = {}
 for key in NOTE_FREQS:
     oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    sawWaves[key] = oscillator.generateWave()
+    saw_waves[key] = oscillator.generate_wave()
 
-triangleWaves = {}
+triangle_waves = {}
 for key in NOTE_FREQS:
     oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    triangleWaves[key] = oscillator.generateWave()
+    triangle_waves[key] = oscillator.generate_wave()
 
 for key in NOTE_FREQS:
-    gained_waves[key] = sineWaves[key].astype(np.int16)
+    gained_waves[key] = sine_waves[key].astype(np.int16)
 
 
 class MainWidget(
@@ -98,6 +98,6 @@ class MainWidget(
         knob_value = MainWidget.win.volume_knob.value()
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(sineWaves[key]).astype(
+            gained_waves[key] = self.vol_ctrl.change_gain(sine_waves[key]).astype(
                 np.int16
             )

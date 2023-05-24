@@ -17,12 +17,12 @@ def test_applyEnvelope(sample_wave):
 
     # Check if the envelope has been applied correctly
     assert len(envelope._envelope) == len(sample_wave)
-    assert len(envelope._modulatedWave) == len(sample_wave)
+    assert len(envelope._modulated_wave) == len(sample_wave)
     
     # Check if the envelope has been applied correctly
-    attack_samples = int(envelope._attack * envelope._sampleRate)
-    decay_samples = int(envelope._decay * envelope._sampleRate)
-    release_samples = int(envelope._release * envelope._sampleRate)
+    attack_samples = int(envelope._attack * envelope._sample_rate)
+    decay_samples = int(envelope._decay * envelope._sample_rate)
+    release_samples = int(envelope._release * envelope._sample_rate)
     sustain_samples = len(sample_wave) - attack_samples - decay_samples - release_samples
 
     expected_envelope = np.concatenate((
@@ -35,7 +35,7 @@ def test_applyEnvelope(sample_wave):
     assert np.array_equal(envelope._envelope, expected_envelope)
 
     normalized_wave = sample_wave / np.max(np.abs(sample_wave)) 
-    assert np.array_equal(envelope._modulatedWave, normalized_wave * expected_envelope)
+    assert np.array_equal(envelope._modulated_wave, normalized_wave * expected_envelope)
 
 def test_applyEnvelope_with_custom_parameters(sample_wave):
     # Create an instance of ADSREnvelope with custom parameters
@@ -43,12 +43,12 @@ def test_applyEnvelope_with_custom_parameters(sample_wave):
 
     # Check if the envelope has been applied correctly
     assert len(envelope._envelope) == len(sample_wave)
-    assert len(envelope._modulatedWave) == len(sample_wave)
+    assert len(envelope._modulated_wave) == len(sample_wave)
     
     # Check if the envelope has been applied correctly
-    attack_samples = int(envelope._attack * envelope._sampleRate)
-    decay_samples = int(envelope._decay * envelope._sampleRate)
-    release_samples = int(envelope._release * envelope._sampleRate)
+    attack_samples = int(envelope._attack * envelope._sample_rate)
+    decay_samples = int(envelope._decay * envelope._sample_rate)
+    release_samples = int(envelope._release * envelope._sample_rate)
     sustain_samples = len(sample_wave) - attack_samples - decay_samples - release_samples
 
     expected_envelope = np.concatenate((
@@ -61,11 +61,11 @@ def test_applyEnvelope_with_custom_parameters(sample_wave):
     assert np.array_equal(envelope._envelope, expected_envelope)
 
     normalized_wave = sample_wave / np.max(np.abs(sample_wave)) 
-    assert np.array_equal(envelope._modulatedWave, normalized_wave * expected_envelope)
+    assert np.array_equal(envelope._modulated_wave, normalized_wave * expected_envelope)
 
 def test_default_sample_rate(sample_wave):
     # Create an instance of ADSREnvelope with the default sample rate
     envelope = ADSREnvelope(sample_wave)
     
     # Check if the sample rate is set to the default value of 48000
-    assert envelope._sampleRate == 48000
+    assert envelope._sample_rate == 48000
