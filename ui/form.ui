@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>610</width>
-    <height>313</height>
+    <width>776</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(10, 10, 10, 255), stop:1 rgba(80, 80, 80, 255));
 border-radius: 4px;</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
+  <layout class="QVBoxLayout" name="main_layout">
    <property name="spacing">
     <number>5</number>
    </property>
@@ -38,7 +38,7 @@ border-radius: 4px;</string>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>130</height>
+       <height>160</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -56,353 +56,8 @@ border-radius: 4px;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="control_layout">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
       <item>
-       <widget class="QFrame" name="wave_frame">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QVBoxLayout" name="wave_layout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="wave_label">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(239, 236, 231);
-background-color: rgba(255, 255, 255, 0);
-border: none;</string>
-           </property>
-           <property name="text">
-            <string>Wave</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="wave_groupBox">
-           <property name="styleSheet">
-            <string notr="true">color: rgb(239, 236, 231);
-background-color: rgba(255, 255, 255, 0);
-border:none;</string>
-           </property>
-           <property name="title">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <layout class="QHBoxLayout" name="wave_options_layout">
-            <property name="spacing">
-             <number>5</number>
-            </property>
-            <property name="leftMargin">
-             <number>5</number>
-            </property>
-            <property name="topMargin">
-             <number>5</number>
-            </property>
-            <property name="rightMargin">
-             <number>5</number>
-            </property>
-            <property name="bottomMargin">
-             <number>5</number>
-            </property>
-            <item>
-             <widget class="QFrame" name="wave_grid">
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
-              </property>
-              <layout class="QGridLayout" name="wave_grid_layout">
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <property name="spacing">
-                <number>5</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QRadioButton" name="sine">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QRadioButton {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
-}
-QRadioButton:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 80);
-	border-right-color: rgba(0, 0, 0, 255);
-	border-bottom-color: rgba(0, 0, 0, 255);
-}
-QRadioButton:pressed {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
-	border-color: rgba(0, 0, 0, 150);
-	border-right-color: rgba(255, 255, 255, 50);
-	border-bottom-color: rgba(255, 255, 255, 50);
-}
-QRadioButton::indicator:unchecked {
-	background-color: rgb(38, 38, 38);
-	border-radius: 4px;
-}
-
-QRadioButton::indicator:checked {
-	border-radius: 4px;
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>Sine</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QRadioButton" name="triangle">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QRadioButton {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
-}
-QRadioButton:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 80);
-	border-right-color: rgba(0, 0, 0, 255);
-	border-bottom-color: rgba(0, 0, 0, 255);
-}
-QRadioButton:pressed {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
-	border-color: rgba(0, 0, 0, 150);
-	border-right-color: rgba(255, 255, 255, 50);
-	border-bottom-color: rgba(255, 255, 255, 50);
-}
-QRadioButton::indicator:unchecked {
-	background-color: rgb(38, 38, 38);
-	border-radius: 4px;
-}
-
-QRadioButton::indicator:checked {
-	border-radius: 4px;
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>Triangle</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QRadioButton" name="square">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QRadioButton {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
-}
-QRadioButton:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 80);
-	border-right-color: rgba(0, 0, 0, 255);
-	border-bottom-color: rgba(0, 0, 0, 255);
-}
-QRadioButton:pressed {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
-	border-color: rgba(0, 0, 0, 150);
-	border-right-color: rgba(255, 255, 255, 50);
-	border-bottom-color: rgba(255, 255, 255, 50);
-}
-QRadioButton::indicator:unchecked {
-	background-color: rgb(38, 38, 38);
-	border-radius: 4px;
-}
-
-QRadioButton::indicator:checked {
-	border-radius: 4px;
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>Square</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QRadioButton" name="sawtooth">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QRadioButton {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
-}
-QRadioButton:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 80);
-	border-right-color: rgba(0, 0, 0, 255);
-	border-bottom-color: rgba(0, 0, 0, 255);
-}
-QRadioButton:pressed {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
-	border-color: rgba(0, 0, 0, 150);
-	border-right-color: rgba(255, 255, 255, 50);
-	border-bottom-color: rgba(255, 255, 255, 50);
-}
-QRadioButton::indicator:unchecked {
-	background-color: rgb(38, 38, 38);
-	border-radius: 4px;
-}
-
-QRadioButton::indicator:checked {
-	border-radius: 4px;
-	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>Sawtooth</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="pitch_frame">
+       <widget class="QFrame" name="attack_frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -411,7 +66,7 @@ QRadioButton::indicator:checked {
         </property>
         <property name="maximumSize">
          <size>
-          <width>180</width>
+          <width>100</width>
           <height>16777215</height>
          </size>
         </property>
@@ -421,7 +76,10 @@ QRadioButton::indicator:checked {
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="pitch_layout">
+        <layout class="QVBoxLayout" name="attack_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
          <property name="leftMargin">
           <number>5</number>
          </property>
@@ -432,27 +90,67 @@ QRadioButton::indicator:checked {
           <number>5</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <property name="horizontalSpacing">
           <number>5</number>
          </property>
-         <property name="verticalSpacing">
-          <number>0</number>
-         </property>
-         <item row="1" column="0">
-          <widget class="QDoubleSpinBox" name="pitch_doubleSpinBox">
+         <item>
+          <widget class="QLabel" name="attack_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Attack</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDial" name="attack_knob">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="attack_double_spin_box">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>72</height>
-            </size>
            </property>
            <property name="font">
             <font>
@@ -465,8 +163,7 @@ QRadioButton::indicator:checked {
 	selection-color: rgb(255, 255, 255);
 	color: rgb(255, 255, 255);
 	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
+	padding: 2px;
 	border: 1px solid;
 	border-color: rgba(255, 255, 255, 30);
 	border-right-color: rgba(0, 0, 0, 128);
@@ -482,32 +179,29 @@ QDoubleSpinBox:hover {
 
 QDoubleSpinBox::up-arrow {
 	background-color: rgb(197, 197, 197);
-	width: 8px;
-	height: 8px;
+	width: 2px;
+	height: 2px;
 	border-radius: 2px;
 }
 QDoubleSpinBox::down-arrow {
 	background-color: rgb(197, 197, 197);
-	width: 8px;
-	height: 8px;
+	width: 2px;
+	height: 2px;
 	border-radius: 2px;
 }
 QDoubleSpinBox::up-button  {
 	border-radius: 4px;
 	margin: 0px;
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
 	padding: 0px;
-	spacing: 10px;
-	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
 	width: 30px;
-	height: 30px;
-	margin: 2px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
 }
 QDoubleSpinBox::up-button:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
 	border: 1px solid;
 	border-color: rgba(255, 255, 255, 80);
 	border-right-color: rgba(0, 0, 0, 255);
@@ -520,20 +214,16 @@ QDoubleSpinBox::up-button:pressed {
 	border-bottom-color: rgba(255, 255, 255, 50);
 }
 QDoubleSpinBox::down-button  {
-	margin: 2px;
 	border-radius: 4px;
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
-	padding: 5px;
-	spacing: 10px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
 	border: 1px solid;
-	border-color: rgba(255, 255, 255, 30);
-	border-right-color: rgba(0, 0, 0, 128);
-	border-bottom-color: rgba(0, 0, 0, 128);
-	width: 20px;
-	height: 20px;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
 }
 QDoubleSpinBox::down-button:hover {
-	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
 	border: 1px solid;
 	border-color: rgba(255, 255, 255, 80);
 	border-right-color: rgba(0, 0, 0, 255);
@@ -546,27 +236,96 @@ QDoubleSpinBox::down-button:pressed {
 	border-bottom-color: rgba(255, 255, 255, 50);
 }</string>
            </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
            <property name="value">
             <double>5.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QDial" name="pitch_knob">
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="decay_frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="decay_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="decay_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Decay</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDial" name="decay_knob">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>68</width>
-             <height>91</height>
-            </size>
-           </property>
            <property name="styleSheet">
             <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
            </property>
            <property name="wrapping">
             <bool>false</bool>
@@ -579,7 +338,537 @@ QDoubleSpinBox::down-button:pressed {
            </property>
           </widget>
          </item>
-         <item row="0" column="0" colspan="2">
+         <item>
+          <widget class="QDoubleSpinBox" name="decay_double_spin_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="sustain_frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="sustain_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="sustain_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Sustain</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDial" name="sustain_knob">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="sustain_double_spin_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="release_frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="release_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="release_label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+           </property>
+           <property name="text">
+            <string>Release</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDial" name="release_knob">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="release_double_spin_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="pitch_frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QVBoxLayout" name="pitch_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
           <widget class="QLabel" name="pitch_label">
            <property name="minimumSize">
             <size>
@@ -600,6 +889,140 @@ border: none;</string>
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QDial" name="pitch_knob">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
+           </property>
+           <property name="wrapping">
+            <bool>false</bool>
+           </property>
+           <property name="notchTarget">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="notchesVisible">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="pitch_double_spin_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -613,7 +1036,7 @@ border: none;</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
+          <width>100</width>
           <height>16777215</height>
          </size>
         </property>
@@ -637,7 +1060,7 @@ border: none;</string>
           <number>5</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <item>
           <widget class="QLabel" name="tone_label">
@@ -668,11 +1091,20 @@ border: none;</string>
          </item>
          <item>
           <widget class="QDial" name="tone_knob">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>120</height>
-            </size>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+           <property name="pageStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>5</number>
            </property>
            <property name="wrapping">
             <bool>false</bool>
@@ -682,6 +1114,98 @@ border: none;</string>
            </property>
            <property name="notchesVisible">
             <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="tone_double_spin_box">
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>5.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -698,7 +1222,7 @@ border: none;</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
+          <width>100</width>
           <height>16777215</height>
          </size>
         </property>
@@ -722,7 +1246,7 @@ border: none;</string>
           <number>5</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <item>
           <widget class="QLabel" name="volume_label">
@@ -753,11 +1277,11 @@ border: none;</string>
          </item>
          <item>
           <widget class="QDial" name="volume_knob">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>120</height>
-            </size>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="maximum">
             <number>10</number>
@@ -765,12 +1289,447 @@ border: none;</string>
            <property name="pageStep">
             <number>1</number>
            </property>
+           <property name="value">
+            <number>9</number>
+           </property>
            <property name="notchTarget">
             <double>10.000000000000000</double>
            </property>
            <property name="notchesVisible">
             <bool>true</bool>
            </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="volume_double_spin_box">
+           <property name="styleSheet">
+            <string notr="true">QDoubleSpinBox {
+	selection-background-color: rgba(255, 255, 255, 50);
+	selection-color: rgb(255, 255, 255);
+	color: rgb(255, 255, 255);
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 2px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QDoubleSpinBox:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(70, 70, 70, 255), stop:1 	rgba(90, 90, 90, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+
+QDoubleSpinBox::up-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::down-arrow {
+	background-color: rgb(197, 197, 197);
+	width: 2px;
+	height: 2px;
+	border-radius: 2px;
+}
+QDoubleSpinBox::up-button  {
+	border-radius: 4px;
+	margin: 0px;
+	padding: 0px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::up-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QDoubleSpinBox::down-button  {
+	border-radius: 4px;
+	width: 30px;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(100, 100, 100, 255), 			stop:	1 rgba(120, 120, 120, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QDoubleSpinBox::down-button:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>10.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>9.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="wave_frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="wave_groupBox">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+background-color: rgb(132, 132, 132);
+border:none;
+background-color: rgb(62, 62, 62);
+background-color: rgb(50, 50, 50);</string>
+        </property>
+        <property name="title">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <layout class="QHBoxLayout" name="wave_options_layout">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="wave_grid">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>5</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="wave_label">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>40</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(239, 236, 231);
+background-color: rgba(255, 255, 255, 0);
+border: none;
+padding: 10px;</string>
+              </property>
+              <property name="text">
+               <string>Wave</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="sine">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QRadioButton {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 5px;
+	spacing: 10px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+	border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+	border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
+              </property>
+              <property name="text">
+               <string>Sine</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="triangle">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QRadioButton {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 5px;
+	spacing: 10px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+	border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+	border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
+              </property>
+              <property name="text">
+               <string>Triangle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="sawtooth">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QRadioButton {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 5px;
+	spacing: 10px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+	border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+	border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
+              </property>
+              <property name="text">
+               <string>Sawtooth</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="square">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QRadioButton {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(60, 60, 60, 255), stop:		1 rgba(80, 80, 80, 255));
+	padding: 5px;
+	spacing: 10px;
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 30);
+	border-right-color: rgba(0, 0, 0, 128);
+	border-bottom-color: rgba(0, 0, 0, 128);
+}
+QRadioButton:hover {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(80, 80, 80, 255), stop:		1 rgba(100, 100, 100, 255));
+	border: 1px solid;
+	border-color: rgba(255, 255, 255, 80);
+	border-right-color: rgba(0, 0, 0, 255);
+	border-bottom-color: rgba(0, 0, 0, 255);
+}
+QRadioButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:1 rgba(60, 60, 60, 255), stop:		0 rgba(70, 70, 70, 255));
+	border-color: rgba(0, 0, 0, 150);
+	border-right-color: rgba(255, 255, 255, 50);
+	border-bottom-color: rgba(255, 255, 255, 50);
+}
+QRadioButton::indicator:unchecked {
+	background-color: rgb(38, 38, 38);
+	border-radius: 4px;
+}
+
+QRadioButton::indicator:checked {
+	border-radius: 4px;
+	background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.357513 		rgba(200, 200, 200, 255), stop:0.388601 rgba(38, 38, 38, 255));
+}</string>
+              </property>
+              <property name="text">
+               <string>Square</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -797,8 +1756,8 @@ border-radius: 3px;
        <rect>
         <x>0</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -824,10 +1783,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="D3">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>51</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -853,10 +1812,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="E3">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>102</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -882,10 +1841,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="F3">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>153</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -911,10 +1870,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="G3">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>204</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -940,10 +1899,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="A3">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>255</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -969,10 +1928,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="B3">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>306</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -998,10 +1957,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="D4">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>408</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1027,10 +1986,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="G4">
       <property name="geometry">
        <rect>
-        <x>440</x>
+        <x>561</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1056,10 +2015,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="A4">
       <property name="geometry">
        <rect>
-        <x>480</x>
+        <x>612</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1085,10 +2044,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="B4">
       <property name="geometry">
        <rect>
-        <x>520</x>
+        <x>663</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1114,10 +2073,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="C5">
       <property name="geometry">
        <rect>
-        <x>560</x>
+        <x>714</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1143,10 +2102,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="F4">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>510</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1172,10 +2131,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="E4">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>459</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1201,10 +2160,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="C4">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>357</x>
         <y>1</y>
-        <width>40</width>
-        <height>166</height>
+        <width>52</width>
+        <height>214</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1230,10 +2189,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="C#3">
       <property name="geometry">
        <rect>
-        <x>30</x>
+        <x>39</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1258,10 +2217,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="D#3">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>90</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1286,10 +2245,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="F#3">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>192</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1314,10 +2273,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="G#3">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>294</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1342,10 +2301,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="A#3">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>243</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1370,10 +2329,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="C#4">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>600</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1398,10 +2357,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="D#4">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>651</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1426,10 +2385,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="F#4">
       <property name="geometry">
        <rect>
-        <x>430</x>
+        <x>396</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1454,10 +2413,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="G#4">
       <property name="geometry">
        <rect>
-        <x>470</x>
+        <x>447</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1482,10 +2441,10 @@ QPushButton:pressed {
      <widget class="QPushButton" name="A#4">
       <property name="geometry">
        <rect>
-        <x>510</x>
+        <x>498</x>
         <y>1</y>
-        <width>20</width>
-        <height>110</height>
+        <width>25</width>
+        <height>140</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1505,40 +2464,6 @@ QPushButton:pressed {
       </property>
       <property name="flat">
        <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="snake_synth_label">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>120</y>
-        <width>600</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>30</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(239, 236, 231);
-background-color: rgba(255, 255, 255, 0);
-border-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));
-padding: 5px;
-color: rgba(0, 0, 0, 40);</string>
-      </property>
-      <property name="text">
-       <string>Snake Synth</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
