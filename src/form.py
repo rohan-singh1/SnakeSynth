@@ -65,9 +65,6 @@ class MainWidget(
         ui_file = QFile(path)
         ui_file.open(QFile.ReadOnly)
         win = loader.load(ui_file, self)
-        win.snake_synth_label.setAttribute(
-            Qt.WA_TransparentForMouseEvents
-        )  # So the label doesn't consume mouse events
         ui_file.close()
 
         # KEYBOARD KEYS
