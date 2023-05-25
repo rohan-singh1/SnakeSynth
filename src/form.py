@@ -65,7 +65,7 @@ class MainWidget(
         ui_file.close()
 
         #variables to hold the radio selections
-        sine_radio = win.sin
+        sine_radio = win.sine
         square_radio = win.square
         sawtooth_radio = win.sawtooth
         triangle_radio = win.triangle
