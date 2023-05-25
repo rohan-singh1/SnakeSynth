@@ -11,7 +11,7 @@ def sample_wave():
     t= np.linspace(0, 2.0, int(48000 * 2.0), endpoint=False)
     return 0.5 * np.sin(2.0 * np.pi * 440.0 * t)
 
-def test_applyEnvelope(sample_wave):
+def test_apply_envelope(sample_wave):
     # Create an instance of ADSREnvelope
     envelope = ADSREnvelope(sample_wave)
 
@@ -37,7 +37,7 @@ def test_applyEnvelope(sample_wave):
     normalized_wave = sample_wave / np.max(np.abs(sample_wave)) 
     assert np.array_equal(envelope._modulated_wave, normalized_wave * expected_envelope)
 
-def test_applyEnvelope_with_custom_parameters(sample_wave):
+def test_apply_envelope_with_custom_parameters(sample_wave):
     # Create an instance of ADSREnvelope with custom parameters
     envelope = ADSREnvelope(sample_wave, attackDuration=0.1, decayDuration=0.3, sustainLevel=0.5, releaseDuration=0.4)
 
