@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from PySide6.QtWidgets import QWidget, QFrame, QPushButton
+from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
 from PySide6.QtCore import QFile, Qt
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
@@ -67,8 +67,17 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
 
-        #Wave selection mechanism
+        #variables to hold the radio selections
+        sine_radio = QRadioButton("sine")
+        square_radio = QRadioButton("square")
+        sawtooth_radio = QRadioButton("sawtooth")
+        triangle_radio = QRadioButton("triangle")
 
+        #Wave selection mechanism
+        sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
+        square_radio.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        sawtooth_radio.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
+        triangle_radio.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
 
         # KEYBOARD KEYS
         # Find all keys in the GUI and assign event handlers to each
@@ -98,22 +107,11 @@ class MainWidget(
         knob_value = MainWidget.win.volume_knob.value()
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(sine_waves[key]).astype(
+            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(
                 np.int16
             )
     #handle different wave types
-    def handle_waveform_selected(self):
-        if self.ui.radioButton_sine.isChecked():
-            selected_waveform = "sine"
-        elif self.ui.radioButton_square.isChecked():
-            selected_waveform = "square"
-        elif self.ui.radioButton_sawtooth.isChecked():
-            selected_waveform = "sawtooth"
-        elif self.ui.radioButton_triangle.isChecked():
-            selected_waveform = "triangle"
-        else:
-            # Handle the case where none of the radio buttons are selected
-            return
+    def handle_waveform_selected(self, selected_waveform):
 
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
@@ -128,3 +126,5 @@ class MainWidget(
         elif selected_waveform == "triangle":
             for key in NOTE_FREQS:
                 gained_waves[key] = triangle_waves[key].astype(np.int16)
+        else:
+            QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
