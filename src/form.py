@@ -72,8 +72,7 @@ class MainWidget(
 
         #default wave selection
         sine_radio.setChecked(True)
-        if sine_radio.isChecked():
-            self.handle_waveform_selected("sine")
+        self.handle_waveform_selected("sine")
 
         #Wave selection mechanism
         sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
