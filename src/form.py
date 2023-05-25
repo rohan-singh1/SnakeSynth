@@ -47,9 +47,6 @@ for key in NOTE_FREQS:
     oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
 
-#for key in NOTE_FREQS:
-#    gained_waves[key] = sine_waves[key].astype(np.int16)
-
 
 class MainWidget(
     QWidget
@@ -74,6 +71,7 @@ class MainWidget(
         triangle_radio = win.findChild(QRadioButton, "triangle")
 
         #default wave selection
+        sine_radio.setChecked(True)
         if sine_radio.isChecked():
             self.handle_waveform_selected("sine")
 
@@ -120,18 +118,14 @@ class MainWidget(
         if selected_waveform == "sine":
             for key in NOTE_FREQS:
                 gained_waves[key] = sine_waves[key].astype(np.int16)
-                print("sine selected")
         elif selected_waveform == "square":
             for key in NOTE_FREQS:
                 gained_waves[key] = square_waves[key].astype(np.int16)
-                print("square selected")
         elif selected_waveform == "sawtooth":
             for key in NOTE_FREQS:
                 gained_waves[key] = saw_waves[key].astype(np.int16)
-                print("saw selected")
         elif selected_waveform == "triangle":
             for key in NOTE_FREQS:
                 gained_waves[key] = triangle_waves[key].astype(np.int16)
-                print("triangle selected")
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
