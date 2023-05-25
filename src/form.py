@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from PySide6.QtWidgets import QWidget, QFrame, QPushButton
+from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
 from PySide6.QtCore import QFile, Qt
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
@@ -39,16 +39,13 @@ for key in NOTE_FREQS:
 
 saw_waves = {}
 for key in NOTE_FREQS:
-    oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
+    oscillator = saw(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     saw_waves[key] = oscillator.generate_wave()
 
 triangle_waves = {}
 for key in NOTE_FREQS:
-    oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
+    oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
-
-for key in NOTE_FREQS:
-    gained_waves[key] = sine_waves[key].astype(np.int16)
 
 
 class MainWidget(
@@ -66,6 +63,23 @@ class MainWidget(
         ui_file.open(QFile.ReadOnly)
         win = loader.load(ui_file, self)
         ui_file.close()
+
+        #variables to hold the radio selections
+        sine_radio = win.sine
+        square_radio = win.square
+        sawtooth_radio = win.sawtooth
+        triangle_radio = win.triangle
+
+        #default wave selection
+        sine_radio.setChecked(True)
+        self.handle_waveform_selected("sine")
+
+        #Wave selection mechanism
+        sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
+        square_radio.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        sawtooth_radio.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
+        triangle_radio.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
+        
 
         # KEYBOARD KEYS
         # Find all keys in the GUI and assign event handlers to each
@@ -95,6 +109,22 @@ class MainWidget(
         knob_value = MainWidget.win.volume_knob.value()
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(sine_waves[key]).astype(
-                np.int16
-            )
+            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
+    #handle different wave types
+    def handle_waveform_selected(self, selected_waveform):
+
+        # Update the gained_waves dictionary based on the selected waveform
+        if selected_waveform == "sine":
+            for key in NOTE_FREQS:
+                gained_waves[key] = sine_waves[key].astype(np.int16)
+        elif selected_waveform == "square":
+            for key in NOTE_FREQS:
+                gained_waves[key] = square_waves[key].astype(np.int16)
+        elif selected_waveform == "sawtooth":
+            for key in NOTE_FREQS:
+                gained_waves[key] = saw_waves[key].astype(np.int16)
+        elif selected_waveform == "triangle":
+            for key in NOTE_FREQS:
+                gained_waves[key] = triangle_waves[key].astype(np.int16)
+        else:
+            QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
