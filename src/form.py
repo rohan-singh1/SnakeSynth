@@ -67,7 +67,7 @@ class MainWidget(
         #variables to hold the radio selections
         sine_radio = win.sin
         square_radio = win.square
-        sawtooth_radio = win.findChild(QRadioButton, "sawtooth")
+        sawtooth_radio = win.sawtooth
         triangle_radio = win.findChild(QRadioButton, "triangle")
 
         #default wave selection
