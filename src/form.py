@@ -68,7 +68,7 @@ class MainWidget(
         sine_radio = win.sin
         square_radio = win.square
         sawtooth_radio = win.sawtooth
-        triangle_radio = win.findChild(QRadioButton, "triangle")
+        triangle_radio = win.triangle
 
         #default wave selection
         sine_radio.setChecked(True)
