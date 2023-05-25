@@ -64,21 +64,15 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
 
-        #variables to hold the radio selections
-        sine_radio = win.sine
-        square_radio = win.square
-        sawtooth_radio = win.sawtooth
-        triangle_radio = win.triangle
-
         #default wave selection
-        sine_radio.setChecked(True)
+        win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
 
         #Wave selection mechanism
-        sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
-        square_radio.clicked.connect(lambda: self.handle_waveform_selected("square"))
-        sawtooth_radio.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
-        triangle_radio.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
+        win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
+        win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        win.sawtooth.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
+        win.triangle.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
         
 
         # KEYBOARD KEYS
@@ -110,9 +104,9 @@ class MainWidget(
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
             gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
+
     #handle different wave types
     def handle_waveform_selected(self, selected_waveform):
-
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
             for key in NOTE_FREQS:
