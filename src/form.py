@@ -64,20 +64,55 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
 
-        #default wave selection
+        # Connecting knob values to its corresponding spin box values
+        win.attack_knob.valueChanged.connect(self.handle_attack_changed)
+        win.decay_knob.valueChanged.connect(self.handle_decay_changed)
+        win.sustain_knob.valueChanged.connect(self.handle_sustain_changed)
+        win.release_knob.valueChanged.connect(self.handle_release_changed)
+        win.pitch_knob.valueChanged.connect(self.handle_pitch_changed)
+        win.tone_knob.valueChanged.connect(self.handle_tone_changed)
+        win.volume_knob.valueChanged.connect(self.handle_volume_changed)
+
+        # Connecting spin box values to its corresponding knob values
+        win.attack_double_spin_box.valueChanged.connect(
+            self.handle_attack_spin_box_value_changed
+        )
+        win.decay_double_spin_box.valueChanged.connect(
+            self.handle_decay_spin_box_value_changed
+        )
+        win.sustain_double_spin_box.valueChanged.connect(
+            self.handle_sustain_spin_box_value_changed
+        )
+        win.release_double_spin_box.valueChanged.connect(
+            self.handle_release_spin_box_value_changed
+        )
+        win.pitch_double_spin_box.valueChanged.connect(
+            self.handle_pitch_spin_box_value_changed
+        )
+        win.tone_double_spin_box.valueChanged.connect(
+            self.handle_tone_spin_box_value_changed
+        )
+        win.volume_double_spin_box.valueChanged.connect(
+            self.handle_volume_spin_box_value_changed
+        )
+
+        # Default wave selection
         win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
 
-        #Wave selection mechanism
+        # Wave selection mechanism
         win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
         win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
-        win.sawtooth.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
-        win.triangle.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
-        
+        win.sawtooth.clicked.connect(
+            lambda: self.handle_waveform_selected("sawtooth")
+        )
+        win.triangle.clicked.connect(
+            lambda: self.handle_waveform_selected("triangle")
+        )
 
         # KEYBOARD KEYS
         # Find all keys in the GUI and assign event handlers to each
-        keys = self.findChildren(QPushButton)
+        keys = win.keys_frame.findChildren(QPushButton)
         for key in keys:
             note = key.objectName()
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
@@ -86,7 +121,6 @@ class MainWidget(
         # VOLUME KNOB
         # Set up default value of the volume knob
         win.volume_knob.setValue(DEFAULT_VOLUME)
-        win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 
         return win
 
@@ -98,14 +132,7 @@ class MainWidget(
     def button_released_handler(self):
         sd.stop()
 
-    # Whenever the knob is turned, get the new gain coefficient then apply to all keys
-    def handle_volume_changed(self):
-        knob_value = MainWidget.win.volume_knob.value()
-        self.vol_ctrl.config(knob_value)
-        for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
-
-    #handle different wave types
+    # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
@@ -122,3 +149,73 @@ class MainWidget(
                 gained_waves[key] = triangle_waves[key].astype(np.int16)
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
+
+    #
+    # Handle knob values changed
+    #
+
+    def handle_attack_changed(self):
+        # Reflect the Attack spin box value as per the current value of the Attack dial
+        self.win.attack_double_spin_box.setValue(self.win.attack_knob.value())
+
+    def handle_decay_changed(self):
+        # Reflect the Decay spin box value as per the current value of the Decay dial
+        self.win.decay_double_spin_box.setValue(self.win.decay_knob.value())
+
+    def handle_sustain_changed(self):
+        # Reflect the Sustain spin box value as per the current value of the Sustain dial
+        self.win.sustain_double_spin_box.setValue(self.win.sustain_knob.value())
+
+    def handle_release_changed(self):
+        # Reflect the Release spin box value as per the current value of the Release dial
+        self.win.release_double_spin_box.setValue(self.win.release_knob.value())
+
+    def handle_pitch_changed(self):
+        # Reflect the Pitch spin box value as per the current value of the Pitch dial
+        self.win.pitch_double_spin_box.setValue(self.win.pitch_knob.value())
+
+    def handle_tone_changed(self):
+        # Reflect the Tone spin box value as per the current value of the Tone dial
+        self.win.tone_double_spin_box.setValue(self.win.tone_knob.value())
+
+    # Whenever the knob is turned, get the new gain coefficient then apply to all keys
+    def handle_volume_changed(self):
+        knob_value = self.win.volume_knob.value()
+        self.win.volume_double_spin_box.setValue(knob_value)
+        self.vol_ctrl.config(knob_value)
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(
+                np.int16
+            )
+
+    #
+    # Handle spin box values changed
+    #
+
+    def handle_attack_spin_box_value_changed(self):
+        # Reflect the Attack dial value as per the current value of the Attack spin box
+        self.win.attack_knob.setValue(self.win.attack_double_spin_box.value())
+
+    def handle_decay_spin_box_value_changed(self):
+        # Reflect the Decay dial value as per the current value of the Decay spin box
+        self.win.decay_knob.setValue(self.win.decay_double_spin_box.value())
+
+    def handle_sustain_spin_box_value_changed(self):
+        # Reflect the Sustain dial value as per the current value of the Sustain spin box
+        self.win.sustain_knob.setValue(self.win.sustain_double_spin_box.value())
+
+    def handle_release_spin_box_value_changed(self):
+        # Reflect the Release dial value as per the current value of the Release spin box
+        self.win.release_knob.setValue(self.win.release_double_spin_box.value())
+
+    def handle_pitch_spin_box_value_changed(self):
+        # Reflect the Pitch dial value as per the current value of the Pitch spin box
+        self.win.pitch_knob.setValue(self.win.pitch_double_spin_box.value())
+
+    def handle_tone_spin_box_value_changed(self):
+        # Reflect the Tone dial value as per the current value of the Tone spin box
+        self.win.tone_knob.setValue(self.win.tone_double_spin_box.value())
+
+    def handle_volume_spin_box_value_changed(self):
+        # Reflect the Volume dial value as per the current value of the Volume spin box
+        self.win.volume_knob.setValue(self.win.volume_double_spin_box.value())
