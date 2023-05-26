@@ -96,23 +96,17 @@ class MainWidget(
             self.handle_volume_spin_box_value_changed
         )
 
-        # Variables to hold the radio selections
-        sine_radio = win.sine
-        square_radio = win.square
-        sawtooth_radio = win.sawtooth
-        triangle_radio = win.triangle
-
         # Default wave selection
-        sine_radio.setChecked(True)
+        win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
 
         # Wave selection mechanism
-        sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
-        square_radio.clicked.connect(lambda: self.handle_waveform_selected("square"))
-        sawtooth_radio.clicked.connect(
+        win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
+        win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        win.sawtooth.clicked.connect(
             lambda: self.handle_waveform_selected("sawtooth")
         )
-        triangle_radio.clicked.connect(
+        win.triangle.clicked.connect(
             lambda: self.handle_waveform_selected("triangle")
         )
 
