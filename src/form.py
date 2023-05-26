@@ -96,25 +96,15 @@ class MainWidget(
             self.handle_volume_spin_box_value_changed
         )
 
-        # Variables to hold the radio selections
-        sine_radio = win.sine
-        square_radio = win.square
-        sawtooth_radio = win.sawtooth
-        triangle_radio = win.triangle
-
-        # Default wave selection
-        sine_radio.setChecked(True)
+        #default wave selection
+        win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
 
-        # Wave selection mechanism
-        sine_radio.clicked.connect(lambda: self.handle_waveform_selected("sine"))
-        square_radio.clicked.connect(lambda: self.handle_waveform_selected("square"))
-        sawtooth_radio.clicked.connect(
-            lambda: self.handle_waveform_selected("sawtooth")
-        )
-        triangle_radio.clicked.connect(
-            lambda: self.handle_waveform_selected("triangle")
-        )
+        #Wave selection mechanism
+        win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
+        win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        win.sawtooth.clicked.connect(lambda: self.handle_waveform_selected("sawtooth"))
+        win.triangle.clicked.connect(lambda: self.handle_waveform_selected("triangle"))
 
         # KEYBOARD KEYS
         # Find all keys in the GUI and assign event handlers to each
@@ -138,7 +128,14 @@ class MainWidget(
     def button_released_handler(self):
         sd.stop()
 
-    # Handle different wave types
+    # Whenever the knob is turned, get the new gain coefficient then apply to all keys
+    def handle_volume_changed(self):
+        knob_value = MainWidget.win.volume_knob.value()
+        self.vol_ctrl.config(knob_value)
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
+
+    #handle different wave types
     def handle_waveform_selected(self, selected_waveform):
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
