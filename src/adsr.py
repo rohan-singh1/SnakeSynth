@@ -3,11 +3,11 @@ https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6d
 
 import numpy as np
 class ADSREnvelope:
-    def __init__(self, attack_duration=0.1, decay_duration=0.2, sustain_level=0.8, release_duration=0.5, sample_rate=48000):
-        self._attack = attack_duration
-        self._decay = decay_duration
-        self._sustain = sustain_level
-        self._release = release_duration
+    def __init__(self, attack_duration=1, decay_duration=2, sustain_level=8, release_duration=5, sample_rate=48000):
+        self._attack = attack_duration * 0.1
+        self._decay = decay_duration * 0.1
+        self._sustain = sustain_level * 0.1
+        self._release = release_duration * 0.1
         self._sample_rate = sample_rate
         self._envelope = np.zeros(sample_rate)
 
@@ -23,15 +23,16 @@ class ADSREnvelope:
     def update_release(self, release):
         self._release = release
     
-    def _create_envelope(self, wave):
+    def create_envelope(self, wave):
         #Not sure I need this variable...
-        duration = len(wave) / self._sample_rate
-        num_samples = int(self._sample_rate * duration)
+        #duration = len(wave) / self._sample_rate
+        #num_samples = int(self._sample_rate * duration)
+        num_samples = len(wave)
 
         attack_samples = int(self._attack * self._sample_rate)
         decay_samples = int(self._decay * self._sample_rate)
         release_samples = int(self._release * self._sample_rate)
-        #sustain_samples = len(self._original_wave) - attack_samples - decay_samples - release_samples
+        #sustain_samples = len(wave) - attack_samples - decay_samples - release_samples
         sustain_samples = max(num_samples - attack_samples - decay_samples - release_samples, 0)
 
         #self._envelope[:attack_samples] = np.linspace(0, 1, attack_samples)
@@ -44,11 +45,7 @@ class ADSREnvelope:
         np.linspace(1, self._sustain, decay_samples),         # Decay phase: linearly decreasing from 1 to sustain_level
         np.full(sustain_samples, self._sustain),              # Sustain phase: constant sustain_level
         np.linspace(self._sustain, 0, release_samples)         # Release phase: linearly decreasing from sustain_level to 0
+        ])
 
-        self.apply_envelope(wave)
-    ])
-    
-    def apply_envelope(self, wave):
-        normalized_wave = wave / np.max(np.abs(wave)) 
-        return normalized_wave * self._envelope
+        return self._envelope
     
