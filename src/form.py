@@ -48,7 +48,7 @@ for key in NOTE_FREQS:
     oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
 
-
+adsr_envelope = ADSREnvelope()
 class MainWidget(
     QWidget
 ):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
@@ -65,7 +65,7 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
 
-        adsr_envelope = ADSREnvelope()
+
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -160,19 +160,22 @@ class MainWidget(
     def handle_attack_changed(self, value):
         # Reflect the Attack spin box value as per the current value of the Attack dial
         self.win.attack_double_spin_box.setValue(self.win.attack_knob.value())
-        
+        adsr_envelope.update_attack(value)
 
     def handle_decay_changed(self, value):
         # Reflect the Decay spin box value as per the current value of the Decay dial
         self.win.decay_double_spin_box.setValue(self.win.decay_knob.value())
+        adsr_envelope.update_decay(value)
 
     def handle_sustain_changed(self, value):
         # Reflect the Sustain spin box value as per the current value of the Sustain dial
         self.win.sustain_double_spin_box.setValue(self.win.sustain_knob.value())
+        adsr_envelope.update_sustain(value)
 
     def handle_release_changed(self, value):
         # Reflect the Release spin box value as per the current value of the Release dial
         self.win.release_double_spin_box.setValue(self.win.release_knob.value())
+        adsr_envelope.update_release(value)
 
     def handle_pitch_changed(self):
         # Reflect the Pitch spin box value as per the current value of the Pitch dial
