@@ -9,6 +9,7 @@ from oscillator import (
     TriangleOscillator as triangle,
     SawtoothOscillator as saw,
 )
+from adsr import ADSREnvelope
 from notefreq import NOTE_FREQS
 from volume import Volume
 import sounddevice as sd
@@ -63,6 +64,8 @@ class MainWidget(
         ui_file.open(QFile.ReadOnly)
         win = loader.load(ui_file, self)
         ui_file.close()
+
+        adsr_envelope = ADSREnvelope()
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -154,19 +157,20 @@ class MainWidget(
     # Handle knob values changed
     #
 
-    def handle_attack_changed(self):
+    def handle_attack_changed(self, value):
         # Reflect the Attack spin box value as per the current value of the Attack dial
         self.win.attack_double_spin_box.setValue(self.win.attack_knob.value())
+        
 
-    def handle_decay_changed(self):
+    def handle_decay_changed(self, value):
         # Reflect the Decay spin box value as per the current value of the Decay dial
         self.win.decay_double_spin_box.setValue(self.win.decay_knob.value())
 
-    def handle_sustain_changed(self):
+    def handle_sustain_changed(self, value):
         # Reflect the Sustain spin box value as per the current value of the Sustain dial
         self.win.sustain_double_spin_box.setValue(self.win.sustain_knob.value())
 
-    def handle_release_changed(self):
+    def handle_release_changed(self, value):
         # Reflect the Release spin box value as per the current value of the Release dial
         self.win.release_double_spin_box.setValue(self.win.release_knob.value())
 
