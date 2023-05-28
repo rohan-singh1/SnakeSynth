@@ -64,24 +64,24 @@ class ADSREnvelope:
 if __name__ == "__main__":
     sine = SineOscillator()
     sine_wave = sine.generate_wave()
-    adsr = ADSREnvelope()
+    adsr = ADSREnvelope(attack_duration=1, decay_duration=1, sustain_level=5, release_duration=1)
     envelope = adsr.create_envelope(sine_wave)
     sine_wave_with_envelope = sine_wave * envelope
 
     # Plot the wave shapes with ADSR envelope
-plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(10, 8))
 
-plt.subplot(4, 1, 1)
-plt.plot(sine_wave)
-plt.title('Sine Wave with ADSR Envelope')
-plt.xlabel('Sample')
-plt.ylabel('Amplitude')
+    plt.subplot(4, 1, 1)
+    plt.plot(sine_wave)
+    plt.title('Sine Wave with ADSR Envelope')
+    plt.xlabel('Sample')
+    plt.ylabel('Amplitude')
 
-plt.subplot(4, 1, 1)
-plt.plot(sine_wave_with_envelope)
-plt.title('Sine Wave with ADSR Envelope')
-plt.xlabel('Sample')
-plt.ylabel('Amplitude')
+    plt.subplot(4, 1, 1)
+    plt.plot(sine_wave_with_envelope)
+    plt.title('Sine Wave with ADSR Envelope')
+    plt.xlabel('Sample')
+    plt.ylabel('Amplitude')
 
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.show()
