@@ -12,7 +12,6 @@ class ADSREnvelope:
         self._release = release_duration * DEFAULT_MS
         self._sample_rate = sample_rate
         self._envelope = np.zeros(sample_rate)
-        self._is_key_pressed = False
 
     def update_attack(self, attack):
         self._attack = attack
@@ -25,12 +24,6 @@ class ADSREnvelope:
         
     def update_release(self, release):
         self._release = release
-
-    def key_pressed(self):
-        self._is_key_pressed = True
-    
-    def key_released(self):
-        self._is_key_pressed = False
     
     def create_envelope(self, wave):
         #Not sure I need this variable...
