@@ -9,6 +9,7 @@ from oscillator import (
     TriangleOscillator as triangle,
     SawtoothOscillator as saw,
 )
+from adsr import ADSREnvelope
 from notefreq import NOTE_FREQS
 from volume import Volume
 import sounddevice as sd
@@ -19,6 +20,10 @@ MAX_AMPLITUDE = 8192
 DURATION = 0.2
 DEFAULT_VOLUME = 9
 DEFAULT_VOLUME_OFFSET = 9
+DEFAULT_ATTACK = 1
+DEFAULT_DECAY = 2
+DEFAULT_SUSTAIN = 8
+DEFAULT_RELEASE = 5
 
 # generate a oscillator for each key inside a dictionary
 # {"A4" : SineOscillator
@@ -47,7 +52,6 @@ for key in NOTE_FREQS:
     oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
 
-
 class MainWidget(
     QWidget
 ):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
@@ -55,6 +59,7 @@ class MainWidget(
         super(MainWidget, self).__init__()
         MainWidget.win = self.load_ui()
         self.vol_ctrl = Volume(DEFAULT_VOLUME, DEFAULT_VOLUME_OFFSET)
+        self.adsr_envelope = ADSREnvelope()
 
     def load_ui(self):
         loader = QUiLoader()
@@ -63,6 +68,7 @@ class MainWidget(
         ui_file.open(QFile.ReadOnly)
         win = loader.load(ui_file, self)
         ui_file.close()
+        self.set_default_values(win)
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -96,10 +102,6 @@ class MainWidget(
             self.handle_volume_spin_box_value_changed
         )
 
-        # Default wave selection
-        win.sine.setChecked(True)
-        self.handle_waveform_selected("sine")
-
         # Wave selection mechanism
         win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
         win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
@@ -126,11 +128,28 @@ class MainWidget(
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
+        #create envelope
+        envelope = self.adsr_envelope.create_envelope(gained_waves[key])
         # Play the samples corresponding to a key
-        sd.play(gained_waves[key], loop=True)
+        sd.play(gained_waves[key] * envelope, loop=True)
 
     def button_released_handler(self):
         sd.stop()
+
+    def set_default_values(self, win):
+        #default attack, sustain, release, decay values
+        win.attack_knob.setValue(DEFAULT_ATTACK)
+        win.attack_double_spin_box.setValue(DEFAULT_ATTACK)
+        win.decay_knob.setValue(DEFAULT_DECAY)
+        win.decay_double_spin_box.setValue(DEFAULT_DECAY)
+        win.sustain_knob.setValue(DEFAULT_SUSTAIN)
+        win.sustain_double_spin_box.setValue(DEFAULT_SUSTAIN)
+        win.release_knob.setValue(DEFAULT_RELEASE)
+        win.release_double_spin_box.setValue(DEFAULT_RELEASE)
+
+        # Default wave selection
+        win.sine.setChecked(True)
+        self.handle_waveform_selected("sine")
 
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
@@ -154,21 +173,29 @@ class MainWidget(
     # Handle knob values changed
     #
 
-    def handle_attack_changed(self):
+    def handle_attack_changed(self, value):
         # Reflect the Attack spin box value as per the current value of the Attack dial
         self.win.attack_double_spin_box.setValue(self.win.attack_knob.value())
+        self.adsr_envelope.update_attack(value)
+        print("attack changed")
 
-    def handle_decay_changed(self):
+    def handle_decay_changed(self, value):
         # Reflect the Decay spin box value as per the current value of the Decay dial
         self.win.decay_double_spin_box.setValue(self.win.decay_knob.value())
+        self.adsr_envelope.update_decay(value)
+        print("decay changed")
 
-    def handle_sustain_changed(self):
+    def handle_sustain_changed(self, value):
         # Reflect the Sustain spin box value as per the current value of the Sustain dial
         self.win.sustain_double_spin_box.setValue(self.win.sustain_knob.value())
+        self.adsr_envelope.update_sustain(value)
+        print("sustain changed")
 
-    def handle_release_changed(self):
+    def handle_release_changed(self, value):
         # Reflect the Release spin box value as per the current value of the Release dial
         self.win.release_double_spin_box.setValue(self.win.release_knob.value())
+        self.adsr_envelope.update_release(value)
+        print("release changed")
 
     def handle_pitch_changed(self):
         # Reflect the Pitch spin box value as per the current value of the Pitch dial
