@@ -1,6 +1,10 @@
 '''Design inspired by 
 https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6dad81'''
 
+from oscillator import SineOscillator
+import matplotlib.pyplot as plt
+import numpy as np
+
 DEFAULT_MS = 0.1
 
 import numpy as np
@@ -11,7 +15,7 @@ class ADSREnvelope:
         self._sustain = sustain_level * DEFAULT_MS
         self._release = release_duration * DEFAULT_MS
         self._sample_rate = sample_rate
-        self._envelope = np.zeros(sample_rate)
+        self._envelope = np.zeros(sample_rate) #empty envelope
 
     def update_attack(self, attack):
         self._attack = attack
@@ -57,3 +61,27 @@ class ADSREnvelope:
 
         return self._envelope
     
+if __name__ == "__main__":
+    sine = SineOscillator()
+    sine_wave = sine.generate_wave()
+    adsr = ADSREnvelope()
+    envelope = adsr.create_envelope(sine_wave)
+    sine_wave_with_envelope = sine_wave * envelope
+
+    # Plot the wave shapes with ADSR envelope
+plt.figure(figsize=(10, 8))
+
+plt.subplot(4, 1, 1)
+plt.plot(sine_wave)
+plt.title('Sine Wave with ADSR Envelope')
+plt.xlabel('Sample')
+plt.ylabel('Amplitude')
+
+plt.subplot(4, 1, 1)
+plt.plot(sine_wave_with_envelope)
+plt.title('Sine Wave with ADSR Envelope')
+plt.xlabel('Sample')
+plt.ylabel('Amplitude')
+
+plt.tight_layout()
+plt.show()

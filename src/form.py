@@ -52,9 +52,6 @@ for key in NOTE_FREQS:
     oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
 
-
-
-
 class MainWidget(
     QWidget
 ):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
@@ -71,16 +68,7 @@ class MainWidget(
         ui_file.open(QFile.ReadOnly)
         win = loader.load(ui_file, self)
         ui_file.close()
-
-        #default attack, sustain, release, decay values
-        win.attack_knob.setValue(DEFAULT_ATTACK)
-        win.attack_double_spin_box.setValue(DEFAULT_ATTACK)
-        win.decay_knob.setValue(DEFAULT_DECAY)
-        win.decay_double_spin_box.setValue(DEFAULT_DECAY)
-        win.sustain_knob.setValue(DEFAULT_SUSTAIN)
-        win.sustain_double_spin_box.setValue(DEFAULT_SUSTAIN)
-        win.release_knob.setValue(DEFAULT_RELEASE)
-        win.release_double_spin_box.setValue(DEFAULT_RELEASE)
+        self.set_default_values(win)
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -113,10 +101,6 @@ class MainWidget(
         win.volume_double_spin_box.valueChanged.connect(
             self.handle_volume_spin_box_value_changed
         )
-
-        # Default wave selection
-        win.sine.setChecked(True)
-        self.handle_waveform_selected("sine")
 
         # Wave selection mechanism
         win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
@@ -151,6 +135,21 @@ class MainWidget(
 
     def button_released_handler(self):
         sd.stop()
+
+    def set_default_values(self, win):
+        #default attack, sustain, release, decay values
+        win.attack_knob.setValue(DEFAULT_ATTACK)
+        win.attack_double_spin_box.setValue(DEFAULT_ATTACK)
+        win.decay_knob.setValue(DEFAULT_DECAY)
+        win.decay_double_spin_box.setValue(DEFAULT_DECAY)
+        win.sustain_knob.setValue(DEFAULT_SUSTAIN)
+        win.sustain_double_spin_box.setValue(DEFAULT_SUSTAIN)
+        win.release_knob.setValue(DEFAULT_RELEASE)
+        win.release_double_spin_box.setValue(DEFAULT_RELEASE)
+
+        # Default wave selection
+        win.sine.setChecked(True)
+        self.handle_waveform_selected("sine")
 
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
