@@ -36,13 +36,8 @@ class ADSREnvelope:
         attack_samples = int(self._attack * self._sample_rate)
         decay_samples = int(self._decay * self._sample_rate)
         release_samples = int(self._release * self._sample_rate)
-        #sustain_samples = len(wave) - attack_samples - decay_samples - release_samples
         sustain_samples = max(len(wave) - attack_samples - decay_samples - release_samples, 0)
 
-        #self._envelope[:attack_samples] = np.linspace(0, 1, attack_samples)
-        #self._envelope[attack_samples:attack_samples+decay_samples] = np.linspace(1, self._sustain, decay_samples)
-        #self._envelope[attack_samples+decay_samples:attack_samples+decay_samples+sustain_samples] = self._sustain
-        #self._envelope[attack_samples+decay_samples+sustain_samples:] = np.linspace(self._sustain, 0, release_samples)
         # Generate the ADSR envelope by concatenating arrays that represent each phase
         self._envelope = np.concatenate([
         np.linspace(0, 1, attack_samples),                    
@@ -73,7 +68,7 @@ if __name__ == "__main__":
 
     plt.subplot(4, 1, 1)
     plt.plot(sine_wave)
-    plt.title('Sine Wave with ADSR Envelope')
+    plt.title('Sine Wave')
     plt.xlabel('Sample')
     plt.ylabel('Amplitude')
 
@@ -83,5 +78,5 @@ if __name__ == "__main__":
     plt.xlabel('Sample')
     plt.ylabel('Amplitude')
 
-    plt.tight_layout()
+    #plt.tight_layout()
     plt.show()
