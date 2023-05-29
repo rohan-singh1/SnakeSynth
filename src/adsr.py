@@ -4,8 +4,17 @@ https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6d
 from oscillator import SineOscillator
 import matplotlib.pyplot as plt
 import numpy as np
+import enum
+
 
 DEFAULT_MS = 0.1
+
+class State(enum.Enum):
+    IDLE = 0
+    ATTACK = 1
+    DECAY = 2
+    SUSTAIN = 3
+    RELEASE = 4
 
 import numpy as np
 class ADSREnvelope:
@@ -16,6 +25,10 @@ class ADSREnvelope:
         self._release = release_duration * DEFAULT_MS
         self._sample_rate = sample_rate
         self._envelope = np.zeros(sample_rate) #empty envelope
+        self._state = State
+
+    def update_state(self, state):
+        self._state = State(state)
 
     def update_attack(self, attack):
         self._attack = attack

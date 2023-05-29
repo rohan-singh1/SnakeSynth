@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
-from PySide6.QtCore import QFile, Qt
+from PySide6.QtCore import QFile, Qt, QRunnable, Slot, QThreadPool
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
     SineOscillator as sine,
@@ -9,7 +9,7 @@ from oscillator import (
     TriangleOscillator as triangle,
     SawtoothOscillator as saw,
 )
-from adsr import ADSREnvelope
+from adsr import ADSREnvelope, State
 from notefreq import NOTE_FREQS
 from volume import Volume
 import sounddevice as sd
@@ -31,28 +31,32 @@ DEFAULT_RELEASE = 5
 # }
 # Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
 gained_waves = {}
-
 sine_waves = {}
-for key in NOTE_FREQS:
-    oscillator = sine(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    sine_waves[key] = oscillator.generate_wave()
-
 square_waves = {}
-for key in NOTE_FREQS:
-    oscillator = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    square_waves[key] = oscillator.generate_wave()
-
 saw_waves = {}
-for key in NOTE_FREQS:
-    oscillator = saw(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    saw_waves[key] = oscillator.generate_wave()
-
 triangle_waves = {}
+
 for key in NOTE_FREQS:
-    oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
-    triangle_waves[key] = oscillator.generate_wave()
+    sine_waves[key] = sine(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION).generate_wave()
+    square_waves[key] = square(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION).generate_wave()
+    saw_waves[key] = saw(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION).generate_wave()
+    triangle_waves[key] = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION).generate_wave()
 
 selected = sine_waves
+
+
+class Worker(QRunnable):
+    def __init__(self, fn, *args, **kwargs):
+        super(Worker, self).__init__()
+        # Store constructor arguments (re-used for processing)
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+
+    @Slot()  # QtCore.Slot
+    def run(self):
+        self.fn(self.args[0])
+
 
 class MainWidget(
     QWidget
@@ -62,6 +66,7 @@ class MainWidget(
         self.vol_ctrl = Volume(DEFAULT_VOLUME, DEFAULT_VOLUME_OFFSET)
         self.adsr_envelope = ADSREnvelope()
         MainWidget.win = self.load_ui()
+        self.threadpool = QThreadPool()
 
     def load_ui(self):
         loader = QUiLoader()
@@ -133,15 +138,44 @@ class MainWidget(
         win.volume_knob.setValue(DEFAULT_VOLUME)
 
         return win
+    
+    def play_loop(self, wav):
+        # Deal with stereo.
+        channels = 1
+
+        # Set up and start the stream.
+        stream = sd.RawOutputStream(
+            samplerate = SAMPLE_RATE,
+            blocksize = 2048,
+            channels = 1,
+            dtype = 'int16',
+        )
+
+        # Write the samples.
+        stream.start()
+        # https://stackoverflow.com/a/73368196
+        while self.adsr_envelope._state == State(1):
+            print("Writing buffer")
+            stream.write(wav)
+
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
         #create envelope
+        self.adsr_envelope.update_state(1)
+        print(self.adsr_envelope._state)
         envelope = self.adsr_envelope.create_envelope(gained_waves[key])
+
+        worker = Worker(self.play_loop, gained_waves[key] ) # Any other args, kwargs are passed to the run function
+        self.threadpool.start(worker)
+
+
         # Play the samples corresponding to a key
-        sd.play(gained_waves[key], loop=True)
+        # sd.play(gained_waves[key], loop=True)
 
     def button_released_handler(self):
+        self.adsr_envelope.update_state(4)
+        print(self.adsr_envelope._state)
         sd.stop()
 
     def set_default_values(self, win):
@@ -181,7 +215,6 @@ class MainWidget(
                 gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
-        gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
 
         
 
