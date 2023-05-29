@@ -5,7 +5,7 @@ from oscillator import SineOscillator
 import matplotlib.pyplot as plt
 import numpy as np
 import enum
-
+import sounddevice as sd
 
 DEFAULT_MS = 0.1
 
@@ -25,7 +25,7 @@ class ADSREnvelope:
         self._release = release_duration * DEFAULT_MS
         self._sample_rate = sample_rate
         self._envelope = np.zeros(sample_rate) #empty envelope
-        self._state = State
+        self._state = State.IDLE
 
     def update_state(self, state):
         self._state = State(state)
@@ -92,4 +92,7 @@ if __name__ == "__main__":
     plt.ylabel('Amplitude')
 
     #plt.tight_layout()
+    sd.wait()
+    sd.play(sine_wave_with_envelope.astype(np.int16), 48000)
+    sd.wait()
     plt.show()

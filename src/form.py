@@ -155,18 +155,22 @@ class MainWidget(
         stream.start()
         # https://stackoverflow.com/a/73368196
         while self.adsr_envelope._state == State(1):
-            print("Writing buffer")
+            print(State(3))
             stream.write(wav)
 
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
-        #create envelope
+        
         self.adsr_envelope.update_state(1)
         print(self.adsr_envelope._state)
-        envelope = self.adsr_envelope.create_envelope(gained_waves[key])
 
-        worker = Worker(self.play_loop, gained_waves[key] ) # Any other args, kwargs are passed to the run function
+        #create envelope
+        envelope = self.adsr_envelope.create_envelope(gained_waves[key])
+        
+        env_wave = (gained_waves[key] * envelope).astype(np.int16)
+
+        worker = Worker(self.play_loop, env_wave ) # Any other args, kwargs are passed to the run function
         self.threadpool.start(worker)
 
 
@@ -176,7 +180,6 @@ class MainWidget(
     def button_released_handler(self):
         self.adsr_envelope.update_state(4)
         print(self.adsr_envelope._state)
-        sd.stop()
 
     def set_default_values(self, win):
         #default attack, sustain, release, decay values
