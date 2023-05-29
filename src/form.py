@@ -181,7 +181,6 @@ class MainWidget(
                 gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
-        gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(np.int16)
 
         
 
