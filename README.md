@@ -62,4 +62,5 @@ _____
 
 ### Project Summary
 
-More detail coming soon...
+More details coming soon...
+_____
