@@ -31,3 +31,17 @@ ___
 	- Pylance
 	- Qt for Python
 ___
+
+### How to Build and Run SnakeSynth
+
+1. Download the files in this repository.
+2. Ensure you have Python and pip downloaded on your local machine.
+	-https://www.python.org/
+3. Create a Python environment in the root folder of the downloaded files.
+	-python3 -m venv env
+	-source env/bin/activate
+4. Download the requirements. 
+	-pip install -r requirements.txt
+5. Run the synth with the command:
+	-python3 main.py
+### 
