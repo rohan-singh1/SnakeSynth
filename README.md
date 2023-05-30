@@ -49,7 +49,12 @@ _____
 ### Testing
 
 Pytest was utilized to create a comprehensive suite of test cases. These test cases covered various aspects of the synthesizer's functionality, including waveform generation, envelope shaping, and volume classes. To validate the correctness of the waveform generation, test cases were designed to compare the generated waveforms against expected waveforms for different oscillator types and parameters. Additionally, the project utilized matplotlib for visual testing of the synthesizer's output. Test cases were written to plot and compare the generated waveforms, spectrograms, and frequency spectra against reference plots. This allowed for precise analysis of the audio output, ensuring that the synthesizer produced the intended sounds accurately. The combination of pytest and matplotlib provided a robust testing framework for the synthesizer project, allowing for thorough evaluation of its functionality and performance. 
+_____
 
+### License
+
+[LICENSE](https://gitlab.cecs.pdx.edu/snakesynth/snakesynth/-/blob/main/LICENSE)
+_____
 ### SnakeSynth UI
 
 ![synthesizer with 25 keys, wave changing options, and knobs for adsr, volume, pitch, and tone](snakeSynthUI.png)
