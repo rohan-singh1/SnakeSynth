@@ -67,7 +67,7 @@ class SineOscillator(Oscillator):
     def generate_wave(self):
         samples = self._amplitude * np.sin(self._step_size * self._time)
 
-        return self.crop_samples(samples)
+        return self.crop_samples(samples).astype(np.int16)
 
 
 class SquareOscillator(SineOscillator):
@@ -95,7 +95,7 @@ class SquareOscillator(SineOscillator):
             else:
                 samples[x] = -self._amplitude
 
-        return self.crop_samples(samples)
+        return self.crop_samples(samples).astype(np.int16)
 
 
 # TRIANGLE OSCILLATOR
@@ -134,7 +134,7 @@ class TriangleOscillator(Oscillator):
                 - self._amplitude
             )
 
-        return self.crop_samples(samples)
+        return self.crop_samples(samples).astype(np.int16)
 
 
 # SAW TOOTH OSCILLATOR
@@ -169,4 +169,4 @@ class SawtoothOscillator(Oscillator):
                 - self._amplitude
             )
 
-        return self.crop_samples(samples)
+        return self.crop_samples(samples).astype(np.int16)

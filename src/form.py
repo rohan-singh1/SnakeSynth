@@ -52,14 +52,16 @@ for key in NOTE_FREQS:
     oscillator = triangle(NOTE_FREQS[key], SAMPLE_RATE, MAX_AMPLITUDE, DURATION)
     triangle_waves[key] = oscillator.generate_wave()
 
+selected = sine_waves
+
 class MainWidget(
     QWidget
 ):  ### defines a class named MainWidget that inherits from QWidget class. The __init__() method initializes the object of the MainWidget class. The super() function is used to call the constructor of the parent class (QWidget) and to get the instance of the MainWidget class. This allows MainWidget to inherit all the attributes and methods from QWidget.
     def __init__(self):
         super(MainWidget, self).__init__()
-        MainWidget.win = self.load_ui()
         self.vol_ctrl = Volume(DEFAULT_VOLUME, DEFAULT_VOLUME_OFFSET)
         self.adsr_envelope = ADSREnvelope()
+        MainWidget.win = self.load_ui()
 
     def load_ui(self):
         loader = QUiLoader()
@@ -69,6 +71,8 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
         self.set_default_values(win)
+
+       
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -103,8 +107,12 @@ class MainWidget(
         )
 
         # Wave selection mechanism
-        win.sine.clicked.connect(lambda: self.handle_waveform_selected("sine"))
-        win.square.clicked.connect(lambda: self.handle_waveform_selected("square"))
+        win.sine.clicked.connect(
+            lambda: self.handle_waveform_selected("sine")
+        )
+        win.square.clicked.connect(
+            lambda: self.handle_waveform_selected("square")
+            )
         win.sawtooth.clicked.connect(
             lambda: self.handle_waveform_selected("sawtooth")
         )
@@ -131,7 +139,7 @@ class MainWidget(
         #create envelope
         envelope = self.adsr_envelope.create_envelope(gained_waves[key])
         # Play the samples corresponding to a key
-        sd.play(gained_waves[key] * envelope, loop=True)
+        sd.play(gained_waves[key], loop=True)
 
     def button_released_handler(self):
         sd.stop()
@@ -150,24 +158,31 @@ class MainWidget(
         # Default wave selection
         win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
-
+    
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
+        global selected_waves
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
+            selected_waves = sine_waves
             for key in NOTE_FREQS:
-                gained_waves[key] = sine_waves[key].astype(np.int16)
+                gained_waves[key] = self.vol_ctrl.change_gain((sine_waves[key]))
         elif selected_waveform == "square":
+            selected_waves = square_waves
             for key in NOTE_FREQS:
-                gained_waves[key] = square_waves[key].astype(np.int16)
+                gained_waves[key] = self.vol_ctrl.change_gain((square_waves[key]))
         elif selected_waveform == "sawtooth":
+            selected_waves = saw_waves
             for key in NOTE_FREQS:
-                gained_waves[key] = saw_waves[key].astype(np.int16)
+                gained_waves[key] = self.vol_ctrl.change_gain((saw_waves[key]))
         elif selected_waveform == "triangle":
+            selected_waves = triangle_waves
             for key in NOTE_FREQS:
-                gained_waves[key] = triangle_waves[key].astype(np.int16)
+                gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
+
+        
 
     #
     # Handle knob values changed
@@ -209,11 +224,10 @@ class MainWidget(
     def handle_volume_changed(self):
         knob_value = self.win.volume_knob.value()
         self.win.volume_double_spin_box.setValue(knob_value)
+        print(knob_value)
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(gained_waves[key]).astype(
-                np.int16
-            )
+            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key]).astype(np.int16)
 
     #
     # Handle spin box values changed
