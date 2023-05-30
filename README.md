@@ -44,6 +44,7 @@ ___
 	`pip install -r requirements.txt`
 5. Run the synth with the command inside of the src folder:
 	`python3 main.py`
+_____
 
 ### Testing
 
