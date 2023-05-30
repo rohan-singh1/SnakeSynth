@@ -58,6 +58,7 @@ _____
 ### SnakeSynth UI
 
 ![synthesizer with 25 keys, wave changing options, and knobs for adsr, volume, pitch, and tone](snakeSynthUI.png)
+_____
 
 ### Project Summary
 
