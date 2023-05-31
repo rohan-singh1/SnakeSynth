@@ -3,6 +3,8 @@
 #can be computed.
 #The change_gain method will take a signal and returned an amplified version.
 
+import numpy as np
+
 class Volume():
     def __init__(self, setting=9, offset=9):
         self._setting = setting
@@ -23,5 +25,5 @@ class Volume():
     
     #change the gain of a given sound wave
     def change_gain(self, samples):
-        return samples * self._gain
+        return (samples * self._gain).astype(np.int16)
 
