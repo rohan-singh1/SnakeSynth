@@ -18,17 +18,22 @@ class State(enum.Enum):
 
 import numpy as np
 class ADSREnvelope:
-    def __init__(self, attack_duration=1, decay_duration=2, sustain_level=8, release_duration=5, sample_rate=48000):
-        self._attack = attack_duration * DEFAULT_MS
-        self._decay = decay_duration * DEFAULT_MS
+    def __init__(self, attack_duration=1, decay_duration=2, sustain_level=1, release_duration=5, sample_rate=48000):
+        self._attack_samples = int(attack_duration * DEFAULT_MS * sample_rate)
+        self._decay_samples = int(decay_duration * DEFAULT_MS * sample_rate)
         self._sustain = sustain_level * DEFAULT_MS
-        self._release = release_duration * DEFAULT_MS
+        self._release_samples = int(release_duration * DEFAULT_MS * sample_rate)
         self._sample_rate = sample_rate
         self._envelope = np.zeros(sample_rate) #empty envelope
+        self._attack_env = self.create_attack_envelope()
+        self._decay_env = self.create_decay_envelope()
+        self._release_env = self.create_release_envelope()
         self._state = State.IDLE
+        self._pos = 0
 
     def update_state(self, state):
-        self._state = State(state)
+        self._pos = 0
+        self._state = state
 
     def update_attack(self, attack):
         self._attack = attack
@@ -41,22 +46,54 @@ class ADSREnvelope:
         
     def update_release(self, release):
         self._release = release
+
+    def process(self, sample):
+        #takes in samples, process based on state, return samples with envelope applied
+        if self._state == State.ATTACK:
+            output = sample * self._attack_env[self._pos]
+            self._pos += 1
+            if self._pos >= self._attack_samples:
+                self.update_state(State.DECAY)
+            return output
+        
+        elif self._state == State.DECAY:
+            output = sample * self._decay_env[self._pos]
+            self._pos += 1
+            if self._pos >= self._decay_samples:
+                self.update_state(State.SUSTAIN)
+            return output
+        
+        elif self._state == State.SUSTAIN:
+            return sample *  self._sustain
+        
+        elif self._state == State.RELEASE:
+            output = sample * self._release_env[self._pos]
+            self._pos += 1
+            if self._pos >= self._release_samples:
+                self.update_state(State.IDLE)
+            return output
+        
+    def create_attack_envelope(self):
+        return np.linspace(0,1,self._attack_samples)
+    
+    def create_decay_envelope(self):
+        return np.linspace(1,self._sustain,self._decay_samples)
+    
+    def create_release_envelope(self):
+        return np.linspace(self._sustain,0,self._release_samples)
+
     
     def create_envelope(self, wave):
         #Not sure I need this variable...
         #duration = len(wave) / self._sample_rate
 
-        attack_samples = int(self._attack * self._sample_rate)
-        decay_samples = int(self._decay * self._sample_rate)
-        release_samples = int(self._release * self._sample_rate)
-        sustain_samples = max(len(wave) - attack_samples - decay_samples - release_samples, 0)
+        #number of samples of each phase
 
         # Generate the ADSR envelope by concatenating arrays that represent each phase
         self._envelope = np.concatenate([
-        np.linspace(0, 1, attack_samples),                    
-        np.linspace(1, self._sustain, decay_samples),         
-        np.full(sustain_samples, self._sustain),              
-        np.linspace(self._sustain, 0, release_samples)         
+        np.linspace(0, 1, self._attack_samples),                    
+        np.linspace(1, self._sustain, self._decay_samples),           
+        np.linspace(self._sustain, 0, self._release_samples)         
         ])
 
         #adjust the length of the envelope using linear interpolation

@@ -146,7 +146,7 @@ class MainWidget(
         # Set up and start the stream.
         stream = sd.RawOutputStream(
             samplerate = SAMPLE_RATE,
-            blocksize = 2048,
+            blocksize = len(wav),
             channels = 1,
             dtype = 'int16',
         )
@@ -154,23 +154,26 @@ class MainWidget(
         # Write the samples.
         stream.start()
         # https://stackoverflow.com/a/73368196
-        while self.adsr_envelope._state == State(1):
-            print(State(3))
-            stream.write(wav)
-
+        # while self.adsr_envelope._state == State.attack:
+        #     print(State(3))
+        #     stream.write(wav)
+        while self.adsr_envelope._state != State.IDLE:
+            out_buffer = np.empty(len(wav))
+            for i in range(len(wav)):
+                out_buffer[i] = self.adsr_envelope.process(wav[i])
+            stream.write(out_buffer.astype(np.int16))
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
         
-        self.adsr_envelope.update_state(1)
-        print(self.adsr_envelope._state)
+        self.adsr_envelope.update_state(State.ATTACK)
 
         #create envelope
-        envelope = self.adsr_envelope.create_envelope(gained_waves[key])
+        # envelope = self.adsr_envelope.create_envelope(gained_waves[key])
         
-        env_wave = (gained_waves[key] * envelope).astype(np.int16)
+        # env_wave = (gained_waves[key] * envelope).astype(np.int16)
 
-        worker = Worker(self.play_loop, env_wave ) # Any other args, kwargs are passed to the run function
+        worker = Worker(self.play_loop, gained_waves[key]) # Any other args, kwargs are passed to the run function
         self.threadpool.start(worker)
 
 
@@ -178,8 +181,7 @@ class MainWidget(
         # sd.play(gained_waves[key], loop=True)
 
     def button_released_handler(self):
-        self.adsr_envelope.update_state(4)
-        print(self.adsr_envelope._state)
+        self.adsr_envelope.update_state(State.RELEASE)
 
     def set_default_values(self, win):
         #default attack, sustain, release, decay values
@@ -218,8 +220,6 @@ class MainWidget(
                 gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
         else:
             QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
-
-        
 
     #
     # Handle knob values changed
