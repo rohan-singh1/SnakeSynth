@@ -14,6 +14,7 @@ from notefreq import NOTE_FREQS
 from volume import Volume
 import sounddevice as sd
 import numpy as np
+sd.default.latency = 'low'
 
 SAMPLE_RATE = 48000
 MAX_AMPLITUDE = 8192
@@ -264,7 +265,7 @@ class MainWidget(
         print(knob_value)
         self.vol_ctrl.config(knob_value)
         for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key]).astype(np.int16)
+            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
 
     #
     # Handle spin box values changed

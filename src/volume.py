@@ -25,5 +25,5 @@ class Volume():
     
     #change the gain of a given sound wave
     def change_gain(self, samples):
-        return (samples * self._gain).astype(np.int16)
+        return (samples * self._gain)
 

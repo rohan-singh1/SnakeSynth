@@ -30,10 +30,6 @@ class Oscillator(ABC):
     def generate_wave(self):
         pass
 
-    def play(self):
-        sd.play(self._gained_samples.astype(np.int16), self._sample_rate)
-        print(self._samples[-1])
-
     # Crop the samples to the final zero crossing, so that the end of a wave match up with the beginning
     # Side effects: final signal is very slightly shorter.
     def crop_samples(self, samples):
@@ -41,9 +37,6 @@ class Oscillator(ABC):
         remainder = round(self._time.size % samples_per_period)
 
         return samples[0 : self._time.size - remainder]
-
-    def stop(self):
-        sd.stop()
 
 
 # SINE OSCILLATOR
@@ -67,7 +60,7 @@ class SineOscillator(Oscillator):
     def generate_wave(self):
         samples = self._amplitude * np.sin(self._step_size * self._time)
 
-        return self.crop_samples(samples).astype(np.int16)
+        return self.crop_samples(samples)
 
 
 class SquareOscillator(SineOscillator):
@@ -95,7 +88,7 @@ class SquareOscillator(SineOscillator):
             else:
                 samples[x] = -self._amplitude
 
-        return self.crop_samples(samples).astype(np.int16)
+        return self.crop_samples(samples)
 
 
 # TRIANGLE OSCILLATOR
@@ -134,7 +127,7 @@ class TriangleOscillator(Oscillator):
                 - self._amplitude
             )
 
-        return self.crop_samples(samples).astype(np.int16)
+        return self.crop_samples(samples)
 
 
 # SAW TOOTH OSCILLATOR
@@ -169,4 +162,4 @@ class SawtoothOscillator(Oscillator):
                 - self._amplitude
             )
 
-        return self.crop_samples(samples).astype(np.int16)
+        return self.crop_samples(samples)
