@@ -218,25 +218,21 @@ class MainWidget(
         # Reflect the Attack spin box value as per the current value of the Attack dial
         self.win.attack_double_spin_box.setValue(self.win.attack_knob.value())
         self.adsr_envelope.update_attack(value)
-        print("attack changed")
 
     def handle_decay_changed(self, value):
         # Reflect the Decay spin box value as per the current value of the Decay dial
         self.win.decay_double_spin_box.setValue(self.win.decay_knob.value())
         self.adsr_envelope.update_decay(value)
-        print("decay changed")
 
     def handle_sustain_changed(self, value):
         # Reflect the Sustain spin box value as per the current value of the Sustain dial
         self.win.sustain_double_spin_box.setValue(self.win.sustain_knob.value())
         self.adsr_envelope.update_sustain(value)
-        print("sustain changed")
 
     def handle_release_changed(self, value):
         # Reflect the Release spin box value as per the current value of the Release dial
         self.win.release_double_spin_box.setValue(self.win.release_knob.value())
         self.adsr_envelope.update_release(value)
-        print("release changed")
 
     def handle_pitch_changed(self):
         # Reflect the Pitch spin box value as per the current value of the Pitch dial
