@@ -52,29 +52,33 @@ class ADSREnvelope:
 
     def process(self, sample):
         #takes in a sample, process based on state, return sample with envelope applied
-        if self._state == State.ATTACK:
-            output = sample * self._attack_env[self._pos]
-            self._pos += 1
-            if self._pos >= self._attack_samples:
-                self.update_state(State.DECAY)
-            return output
-        
-        elif self._state == State.DECAY:
-            output = sample * self._decay_env[self._pos]
-            self._pos += 1
-            if self._pos >= self._decay_samples:
-                self.update_state(State.SUSTAIN)
-            return output
-        
-        elif self._state == State.SUSTAIN:
-            return sample *  self._sustain
-        
-        elif self._state == State.RELEASE:
-            output = sample * self._release_env[self._pos]
-            self._pos += 1
-            if self._pos >= self._release_samples:
-                self.update_state(State.IDLE)
-            return output
+        try:
+            if self._state == State.ATTACK:
+                output = sample * self._attack_env[self._pos]
+                self._pos += 1
+                if self._pos >= self._attack_samples:
+                    self.update_state(State.DECAY)
+                return output
+            
+            elif self._state == State.DECAY:
+                output = sample * self._decay_env[self._pos]
+                self._pos += 1
+                if self._pos >= self._decay_samples:
+                    self.update_state(State.SUSTAIN)
+                return output
+            
+            elif self._state == State.SUSTAIN:
+                return sample *  self._sustain
+            
+            elif self._state == State.RELEASE:
+                output = sample * self._release_env[self._pos]
+                self._pos += 1
+                if self._pos >= self._release_samples:
+                    self.update_state(State.IDLE)
+                return output
+            
+        except IndexError:          #if knob is turned to 0 
+            return          #return without applying that part of the envelope
         
     def create_attack_envelope(self):
         return np.linspace(0,1,self._attack_samples)
