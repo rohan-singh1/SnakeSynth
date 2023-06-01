@@ -12,7 +12,11 @@ from oscillator import (
 from adsr import ADSREnvelope, State
 from notefreq import NOTE_FREQS
 from volume import Volume
+from MIDI_DETECTION_TOOL import identify_and_select_midi_device
+from MIDI_DETECTION_TOOL import receive_midi_input
+import pygame
 import sounddevice as sd
+import threading
 import numpy as np
 sd.default.latency = 'low'
 
@@ -45,6 +49,8 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
+
+
 #Thread worker
 class Worker(QRunnable):
     def __init__(self, fn, *args, **kwargs):
@@ -68,6 +74,17 @@ class MainWidget(
         self.adsr_envelope = ADSREnvelope()
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
+        # Call identify_and_select_midi_device after UI is loaded. Uses threading to allow GUI to also load
+        self.start_midi_thread()
+
+    def start_midi_thread(self):
+        input_device = identify_and_select_midi_device() # Identify and select the MIDI input device
+        self.receive_midi_input(input_device)  # Start receiving MIDI input from the selected device
+
+    def receive_midi_input(self, input_device):
+        # Implementation of receiving MIDI input
+        # ... Add code here for handling MIDI input
+        pass
 
     def load_ui(self):
         loader = QUiLoader()
