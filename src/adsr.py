@@ -4,6 +4,17 @@ https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6d
 The ADSREnvelope class represents an Attack-Decay-Sustain-Release (ADSR) envelope used in 
 a synthesizer. This envelope is responsible for modulating the amplitude of the synthesized 
 waveform over time, creating dynamic changes in the sound.
+
+To use the ADSREnvelope class, follow these steps:
+
+1. Create an instance of the ADSREnvelope class, specifying the desired parameters such as 
+attack, decay, sustain, release durations, and sample rate.
+2. Update the envelope state using the update_state() method to set the initial state.
+3. Optionally, update the attack, decay, sustain, or release parameters using the corresponding 
+update methods (update_attack(), update_decay(), update_sustain(), update_release()).
+4. Process each sample of the audio waveform by passing it to the process() method, which 
+applies the envelope based on the current state and returns the output sample with the envelope applied.
+
 '''
 
 import numpy as np
