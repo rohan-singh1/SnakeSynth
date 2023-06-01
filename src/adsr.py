@@ -1,5 +1,10 @@
 '''Design inspired by 
-https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6dad81'''
+https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6dad81
+
+The ADSREnvelope class represents an Attack-Decay-Sustain-Release (ADSR) envelope used in 
+a synthesizer. This envelope is responsible for modulating the amplitude of the synthesized 
+waveform over time, creating dynamic changes in the sound.
+'''
 
 import numpy as np
 import enum
