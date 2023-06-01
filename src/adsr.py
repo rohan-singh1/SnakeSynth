@@ -1,8 +1,6 @@
 '''Design inspired by 
 https://python.plainenglish.io/build-your-own-python-synthesizer-part-2-66396f6dad81'''
 
-from oscillator import SineOscillator
-import matplotlib.pyplot as plt
 import numpy as np
 import enum
 import sounddevice as sd
