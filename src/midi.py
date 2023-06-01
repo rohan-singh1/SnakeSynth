@@ -1,4 +1,7 @@
 ### Module that contains Midi hardware detection and input message handling ###
+'''
+ADD DEVELOPER DOCS WHEN COMPLETE
+'''
 
 import pygame.midi
 
