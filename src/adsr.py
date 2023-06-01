@@ -44,7 +44,7 @@ class ADSREnvelope:
         self._decay_env = self.create_decay_envelope()
     
     def update_sustain(self, sustain):
-        self._sustain = sustain
+        self._sustain = sustain * DEFAULT_MS
         
     def update_release(self, release):
         self._release_samples = int(release * DEFAULT_MS * self._sample_rate)
