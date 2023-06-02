@@ -100,7 +100,7 @@ class MainWidget(
             widget.show()
             sys.exit(app.exec_())
         else:
-            print("No MIDI device selected. Check connections or Rock the synth GUI")  # readout for no MIDI device situation 
+            print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
         self.midi_thread = MidiThread(None)
         self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
