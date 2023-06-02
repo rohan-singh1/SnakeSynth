@@ -38,9 +38,9 @@ ___
 2. Ensure you have Python and pip downloaded on your local machine.
 	https://www.python.org/
 3. Create a Python environment in the root folder of the downloaded files.
-UNIX/MACOS: `python3 -m venv env`
-Windows: `'py -m venv env'`
-	Activate with: `source env/bin/activate`
+UNIX/MACOS: `python3 -m venv env` Activate: `source env/bin/activate`
+Windows: `'py -m venv env'` Activate: ` .\env\Scripts\activate`
+	
 4. Download the requirements. 
 	`pip install -r requirements.txt`
 5. Run the synth with the command inside of the src folder:
