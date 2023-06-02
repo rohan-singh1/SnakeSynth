@@ -1,6 +1,7 @@
 import os
+import sys
 from pathlib import Path
-from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
+from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox, QApplication
 from PySide6.QtCore import QFile, Qt, QObject, QRunnable, Slot, QThreadPool, Signal
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
@@ -96,6 +97,7 @@ class MainWidget(
 
         #handling blurb for no-device situation 
         if input_device is not None:
+            app = QApplication(sys.argv)
             widget = MainWidget(input_device)
             widget.show()
             sys.exit(app.exec_())
