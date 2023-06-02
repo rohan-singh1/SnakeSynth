@@ -92,8 +92,16 @@ class MainWidget(
         self.threadpool = QThreadPool()
 
         # MIDI stuff here begins here: 
-        input_device = identify_and_select_midi_device()
-        
+        input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
+
+        #handling blurb for no-device situation 
+        if input_device is not None:
+            widget = MainWidget(input_device)
+            widget.show()
+            sys.exit(app.exec_())
+        else:
+            print("No MIDI device selected. Check connections or Rock the synth GUI")  # readout for no MIDI device situation 
+
         self.midi_thread = MidiThread(None)
         self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
 

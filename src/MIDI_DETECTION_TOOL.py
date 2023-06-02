@@ -8,7 +8,7 @@ def identify_and_select_midi_device():
     if device_count == 0:  # Check if no MIDI devices are detected
         print("No MIDI devices detected.")
         pygame.midi.quit()  # Quit Pygame MIDI module
-        return
+        return None
 
     print("Number of available MIDI input devices:", device_count)  # Print the number of available MIDI devices
 
@@ -25,14 +25,18 @@ def identify_and_select_midi_device():
     if device_number_select >= device_count:  # Check if the selected device number is valid
         print("Invalid device number selected.")
         pygame.midi.quit()  # Quit Pygame MIDI module
-        return
+        return None
 
     print('Selected Device Number is:', device_number_select)
 
     # Select the desired MIDI input device
-    input_device = pygame.midi.Input(device_number_select)
-
-    return input_device
+    try:
+        input_device = pygame.midi.Input(device_number_select)
+        return input_device
+    except pygame.midi.MidiException as e:
+        print(str(e))
+        pygame.midi.quit()
+        return None
 
 
 def receive_midi_input(midi_input_device):
