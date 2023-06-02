@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
-from PySide6.QtCore import QFile, Qt, QRunnable, Slot, QThreadPool
+from PySide6.QtCore import QFile, Qt, QObject, QRunnable, Slot, QThreadPool, Signal
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
     SineOscillator as sine,
@@ -64,6 +64,22 @@ class Worker(QRunnable):
     def run(self):
         self.fn(self.args[0])
 
+# Definition of a class that inherits QObject
+class MidiThread(QObject):
+    # Define the start_midi_thread signal
+    start_midi_thread = Signal()   # establishes a signal to manipulate 
+
+    def __init__(self, input_device):       # construct that is used for instances of MIDITHREAD class
+        super().__init__()
+        self.input_device = input_device
+
+    def receive_midi_input(self, input_device):
+        # Implementation of receiving MIDI input
+        # ... Put the midi message shit and triggers here 
+        pass
+
+    def start(self):
+        self.start_midi_thread.emit()
 
 class MainWidget(
     QWidget
@@ -74,18 +90,17 @@ class MainWidget(
         self.adsr_envelope = ADSREnvelope()
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
-        # Call identify_and_select_midi_device after UI is loaded. Uses threading to allow GUI to also load
-        self.start_midi_thread()
 
-    def start_midi_thread(self):
-        input_device = identify_and_select_midi_device() # Identify and select the MIDI input device
-        self.receive_midi_input(input_device)  # Start receiving MIDI input from the selected device
+        # MIDI stuff here begins here: 
+        input_device = identify_and_select_midi_device()
+        
+        self.midi_thread = MidiThread(None)
+        self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
 
-    def receive_midi_input(self, input_device):
-        # Implementation of receiving MIDI input
-        # ... Add code here for handling MIDI input
-        pass
-
+        # Start the MIDI thread 
+        self.midi_thread.start()
+        # /end midi stuff
+        
     def load_ui(self):
         loader = QUiLoader()
         path = os.fspath(Path(__file__).resolve().parent / "../ui/form.ui")
