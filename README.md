@@ -42,7 +42,7 @@ ___
 	Windows: 'py -m venv env' Activate:  .\env\Scripts\activate
 4. Download the requirements. 
 	`pip install -r requirements.txt`
-5. Run the synth with the command inside of the src folder:
+4. Run the synth with the command inside of the src folder:
 	`python3 main.py`
 _____
 

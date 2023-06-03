@@ -3,6 +3,12 @@
 #can be computed.
 #The change_gain method will take a signal and returned an amplified version.
 
+'''
+The Volume class allows for changing the volume level and applying gain coefficients to audio signals. 
+To use it, import the class, create an instance, use the config() method to configure the volume parameter
+given a knob value, use the calculate_gain() method to calculate the gain coefficients, 
+and the change_gain() method to dynamically adjust the gain.
+'''
 import numpy as np
 
 class Volume():

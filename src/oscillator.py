@@ -1,13 +1,27 @@
+'''Design idea from:
+https://python.plainenglish.io/making-a-synth-with-python-oscillators-2cb8e68e9c3b
+
+The provided code defines four different types of oscillators: SineOscillator, SquareOscillator, 
+TriangleOscillator, and SawtoothOscillator. Each oscillator generates a specific waveform and 
+provides methods for generating and playing audio waves. The Oscillator class is an abstract
+base class which each oscillator pulls common functionality from.
+
+Usage
+To use the oscillators in your project, follow these steps:
+
+1. Import the desired oscillator class(es) from the oscillators module.
+2. Create an instance of the desired oscillator class, optionally specifying custom parameters 
+such as frequency, sample rate, amplitude, and duration.
+3. Call the generate_wave() method to generate the audio wave.
+4. Optionally, you can call the play() method to play the generated wave using the default audio output device.
+5. To stop the audio playback, call the stop() method.
+
+'''
+
 from abc import ABC
 import numpy as np
 import sounddevice as sd
-
-# import matplotlib.pyplot as plot
 import pyaudio
-
-"""Design idea from:
-https://python.plainenglish.io/making-a-synth-with-python-oscillators-2cb8e68e9c3b"""
-
 
 class Oscillator(ABC):
     def __init__(

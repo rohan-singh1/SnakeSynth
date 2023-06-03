@@ -1,3 +1,24 @@
+'''
+Overview
+This code represents a synthesizer GUI application written in Python using the PySide6 library.
+The synthesizer UI  supports multiple waveforms including sine, square, sawtooth, and triangle waves
+ with adjustable parameters attack, decay, sustain, and release (ADSR envelope), volume, pitch, and tone. 
+
+Wave Generation
+After defining the constants, the code generates waveforms for each key using different oscillators 
+(sine, square, sawtooth, and triangle). These waveforms are stored in dictionaries for easy access.
+
+Worker Class
+The Worker class is a helper class that is used to run the audio processing in a separate thread 
+to avoid blocking the GUI.
+
+MainWidget Class
+The MainWidget class represents the main widget of the synthesizer application. It inherits from 
+the QWidget class provided by the PySide6 library. The class contains methods for handling UI events, 
+such as button presses, knob changes, and waveform selection.
+
+'''
+
 import os
 import sys
 from pathlib import Path
