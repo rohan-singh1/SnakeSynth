@@ -97,10 +97,7 @@ class MainWidget(
 
         #handling blurb for no-device situation 
         if input_device is not None:
-            app = QApplication(sys.argv)
-            widget = MainWidget(input_device)
-            widget.show()
-            sys.exit(app.exec_())
+            pass
         else:
             print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
