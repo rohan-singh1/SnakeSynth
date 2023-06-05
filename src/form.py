@@ -34,8 +34,8 @@ from oscillator import (
 from adsr import ADSREnvelope, State
 from notefreq import NOTE_FREQS
 from volume import Volume
-from MIDI_DETECTION_TOOL import identify_and_select_midi_device
-from MIDI_DETECTION_TOOL import receive_midi_input
+from mididetect import identify_and_select_midi_device
+from mididetect import receive_midi_input
 import pygame
 import sounddevice as sd
 import threading
