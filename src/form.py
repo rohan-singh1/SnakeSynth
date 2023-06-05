@@ -70,8 +70,6 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
-pygame.init()
-pygame.midi.init()  # This line ensures that the pygame.midi module is properly initialized before any MIDI-related operations are performed
 
 #Thread worker
 class Worker(QRunnable):
@@ -88,11 +86,13 @@ class Worker(QRunnable):
 
 # Definition of a class that inherits QObject
 class MidiThread(QObject):
+    pygame.midi.init()
     # Define the start_midi_thread signal
     start_midi_thread = Signal()   # establishes a signal to manipulate 
 
     def __init__(self, input_device):       # construct that is used for instances of MIDITHREAD class
         super().__init__()
+        pygame.midi.init()
         self.input_device = input_device
 
     
@@ -100,8 +100,10 @@ class MidiThread(QObject):
         self.start_midi_thread.emit()
 
 class MidiInputWorker(QRunnable):
+
     def __init__(self, input_device):
         super(MidiInputWorker, self).__init__()
+        pygame.midi.init()
         self.input_device = input_device
 
     @Slot()

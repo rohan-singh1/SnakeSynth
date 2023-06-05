@@ -17,12 +17,16 @@ from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QSize
 import atexit
 import pygame.midi
+import traceback
 
 WINDOW_WIDTH = 776
 WINDOW_HEIGHT = 444
 
 def cleanup():
-    pygame.midi.quit()
+    try:
+        pygame.midi.quit()
+    except Exception as e:
+        traceback.print_exc()
 
 if __name__ == "__main__":
     # Initialize pygame
