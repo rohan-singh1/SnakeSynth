@@ -37,8 +37,8 @@ ___
 1. Download the files in this repository.
 2. Ensure you have Python and pip downloaded on your local machine.
 	https://www.python.org/
-4. Download the requirements. 
-	`pip install -r requirements.txt`
+3. Download the requirements. 
+	`pip3 install -r requirements.txt`
 4. Run the synth with the command inside of the src folder:
 	`python3 main.py`
 _____
