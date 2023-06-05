@@ -20,9 +20,10 @@ such as button presses, knob changes, and waveform selection.
 '''
 
 import os
+import sys
 from pathlib import Path
-from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox
-from PySide6.QtCore import QFile, Qt, QRunnable, Slot, QThreadPool
+from PySide6.QtWidgets import QWidget, QFrame, QPushButton, QRadioButton, QMessageBox, QApplication
+from PySide6.QtCore import QFile, Qt, QObject, QRunnable, Slot, QThreadPool, Signal
 from PySide6.QtUiTools import QUiLoader
 from oscillator import (
     SineOscillator as sine,
@@ -33,7 +34,11 @@ from oscillator import (
 from adsr import ADSREnvelope, State
 from notefreq import NOTE_FREQS
 from volume import Volume
+from midi_detect import identify_and_select_midi_device
+from midi_detect import receive_midi_input
+import pygame
 import sounddevice as sd
+import threading
 import numpy as np
 sd.default.latency = 'low'
 
@@ -66,6 +71,8 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
+
+
 #Thread worker
 class Worker(QRunnable):
     def __init__(self, fn, *args, **kwargs):
@@ -79,6 +86,22 @@ class Worker(QRunnable):
     def run(self):
         self.fn(self.args[0])
 
+# Definition of a class that inherits QObject
+class MidiThread(QObject):
+    # Define the start_midi_thread signal
+    start_midi_thread = Signal()   # establishes a signal to manipulate 
+
+    def __init__(self, input_device):       # construct that is used for instances of MIDITHREAD class
+        super().__init__()
+        self.input_device = input_device
+
+    def receive_midi_input(self, input_device):
+        # Implementation of receiving MIDI input
+        # ... Put the midi message shit and triggers here 
+        pass
+
+    def start(self):
+        self.start_midi_thread.emit()
 
 class MainWidget(
     QWidget
@@ -90,6 +113,22 @@ class MainWidget(
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
 
+        # MIDI stuff here begins here: 
+        input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
+
+        #handling blurb for no-device situation 
+        if input_device is not None:
+            pass
+        else:
+            print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
+
+        self.midi_thread = MidiThread(None)
+        self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
+
+        # Start the MIDI thread 
+        self.midi_thread.start()
+        # /end midi stuff
+        
     def load_ui(self):
         loader = QUiLoader()
         path = os.fspath(Path(__file__).resolve().parent / "../ui/form.ui")
