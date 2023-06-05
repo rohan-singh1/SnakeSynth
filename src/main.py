@@ -15,14 +15,29 @@ import sys
 from form import MainWidget
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QSize
+import atexit
+import pygame.midi
 
 WINDOW_WIDTH = 776
 WINDOW_HEIGHT = 444
 
+def cleanup():
+    pygame.midi.quit()
+
 if __name__ == "__main__":
+    # Initialize pygame
+    pygame.init()
+
+    # Initialize pygame.midi
+    pygame.midi.init()
+
     app = QApplication([])
     widget = MainWidget()
     widget.setWindowTitle("Snake Synth")
     widget.setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT))
     widget.show()
+
+    # Register the cleanup function to be called on program exit
+    atexit.register(cleanup)
+
     sys.exit(app.exec())

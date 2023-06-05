@@ -38,7 +38,6 @@ from MIDI_DETECTION_TOOL import identify_and_select_midi_device
 from MIDI_DETECTION_TOOL import receive_midi_input
 import pygame
 import sounddevice as sd
-import threading
 import numpy as np
 sd.default.latency = 'low'
 
@@ -71,7 +70,8 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
-
+pygame.init()
+pygame.midi.init()  # This line ensures that the pygame.midi module is properly initialized before any MIDI-related operations are performed
 
 #Thread worker
 class Worker(QRunnable):
@@ -95,13 +95,19 @@ class MidiThread(QObject):
         super().__init__()
         self.input_device = input_device
 
-    def receive_midi_input(self, input_device):
-        # Implementation of receiving MIDI input
-        # ... Put the midi message shit and triggers here 
-        pass
-
+    
     def start(self):
         self.start_midi_thread.emit()
+
+class MidiInputWorker(QRunnable):
+    def __init__(self, input_device):
+        super(MidiInputWorker, self).__init__()
+        self.input_device = input_device
+
+    @Slot()
+    def run(self):
+        for midi_message in receive_midi_input(self.input_device):
+            print("Received MIDI message:", midi_message)
 
 class MainWidget(
     QWidget
@@ -117,18 +123,33 @@ class MainWidget(
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
 
         #handling blurb for no-device situation 
+        #handling blurb for no-device situation 
         if input_device is not None:
-            pass
+            # These lines essentially set up the MIDI thread, connect the appropriate method for receiving MIDI input, and start the thread's execution.
+            # This allows the application to receive and process MIDI messages concurrently without blocking the main user interface.
+    
+            # Create an instance of MidiInputWorker
+            self.midi_worker = MidiInputWorker(input_device)
+
+            # Start the MidiInputWorker as a new thread
+            self.threadpool.start(self.midi_worker)
+
+            self.midi_thread = MidiThread(None)
+            # self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
+
+            # Start the MIDI thread
+            self.midi_thread.start()
         else:
-            print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
+            print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation
 
-        self.midi_thread = MidiThread(None)
-        self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
 
-        # Start the MIDI thread 
-        self.midi_thread.start()
-        # /end midi stuff
+    
         
+
+  #  def receive_midi_input(self, input_device):
+   #     for midi_message in receive_midi_input(input_device):
+  #          print("Received MIDI message:", midi_message)
+    
     def load_ui(self):
         loader = QUiLoader()
         path = os.fspath(Path(__file__).resolve().parent / "../ui/form.ui")
@@ -137,8 +158,6 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
         self.set_default_values(win)
-
-       
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
@@ -221,6 +240,7 @@ class MainWidget(
             for i in range(len(wav)):
                 out_buffer[i] = self.adsr_envelope.process(wav[i])
             stream.write(out_buffer.astype(np.int16))
+        
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):

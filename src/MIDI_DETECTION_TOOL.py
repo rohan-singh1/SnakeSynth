@@ -40,6 +40,7 @@ def identify_and_select_midi_device():
 
 
 def receive_midi_input(midi_input_device):
+   
     # Main loop to receive MIDI input
     running = True
     while running:
@@ -50,6 +51,7 @@ def receive_midi_input(midi_input_device):
 
             # Process the MIDI messages
             for event in midi_events:
+                
                 # Extract MIDI data from the event
                 data = event[0]  # The MIDI data is stored in the first element of the event tuple
 
@@ -61,8 +63,8 @@ def receive_midi_input(midi_input_device):
                 # Print the MIDI message
                 print(f"Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
 
-        # More functionality can go here:: :
-
+        # More functionality can go here:
+                
 
 # How to Call the device detection function once and store it in a variable
 # input_device = identify_and_select_midi_device()
