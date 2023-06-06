@@ -72,6 +72,34 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
+#Key names in the GUI
+GUI_KEY_NAMES = [
+    "C3",
+    "C#3",
+    "D3",
+    "D#3",
+    "E3",
+    "F3",
+    "F#3",
+    "G3",
+    "G#3",
+    "A3",
+    "A#3",
+    "B3",
+    "C4",
+    "C#4",
+    "D4",
+    "D#4",
+    "E4",
+    "F4",
+    "F#4",
+    "G4",
+    "G#4",
+    "A4",
+    "A#4",             
+    "B4",               
+    "C5" 
+]
 
 
 #Thread worker
@@ -114,8 +142,36 @@ class MainWidget(
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
         self.pitch_previous_value = DEFAULT_PITCH
-        self.pitch_start = "C3"
-        self.pitch_end = "C5"
+
+        #default key mapping (matches the key names in the GUI)
+        self.pitch_shifted_keys = [
+            "C3",
+            "C#3",
+            "D3",
+            "D#3",
+            "E3",
+            "F3",
+            "F#3",
+            "G3",
+            "G#3",
+            "A3",
+            "A#3",
+            "B3",
+            "C4",
+            "C#4",
+            "D4",
+            "D#4",
+            "E4",
+            "F4",
+            "F#4",
+            "G4",
+            "G#4",
+            "A4",
+            "A#4",             
+            "B4",               
+            "C5" 
+        ]
+
 
         # MIDI stuff here begins here: 
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
@@ -257,22 +313,12 @@ class MainWidget(
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
             selected_waves = sine_waves
-            #for key in NOTE_FREQS:
-            #    gained_waves[key] = self.vol_ctrl.change_gain((sine_waves[key]))
         elif selected_waveform == "square":
             selected_waves = square_waves
-            #for key in NOTE_FREQS:
-            #    gained_waves[key] = self.vol_ctrl.change_gain((square_waves[key]))
         elif selected_waveform == "sawtooth":
             selected_waves = saw_waves
-            #for key in NOTE_FREQS:
-            #    gained_waves[key] = self.vol_ctrl.change_gain((saw_waves[key]))
         elif selected_waveform == "triangle":
             selected_waves = triangle_waves
-            #for key in NOTE_FREQS:
-            #    gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
-        #else:
-        #    QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
         for key in NOTE_FREQS:
             gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
     #
@@ -306,7 +352,14 @@ class MainWidget(
         # Calculate the difference between previous knob value and current knob value
         difference = knob_value - self.pitch_previous_value
         self.pitch_previous_value = knob_value
-        #Extract note letter from start and end
+
+        #Extract note letter key mapping
+        for i, key in enumerate(self.pitch_shifted_keys):
+            note_name = key[:-1]
+            note_octave = int(key[-1])
+            self.pitch_shifted_keys[i] = f"{note_name}{str(note_octave+difference)}"
+        print(self.pitch_shifted_keys)
+        '''
         note_name_start = self.pitch_start[:-1]
         note_name_end = self.pitch_end[:-1]
         #Extract octave number from start and end
@@ -318,6 +371,7 @@ class MainWidget(
         #Update the variables for the current pitch range
         self.pitch_start = shifted_note_start
         self.pitch_end = shifted_note_end
+        '''
 
 
     def handle_tone_changed(self):
