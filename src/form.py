@@ -47,10 +47,11 @@ MAX_AMPLITUDE = 8192
 DURATION = 0.2
 DEFAULT_VOLUME = 9
 DEFAULT_VOLUME_OFFSET = 9
-DEFAULT_ATTACK = 5
-DEFAULT_DECAY = 5
-DEFAULT_SUSTAIN = 5
-DEFAULT_RELEASE = 5
+DEFAULT_ATTACK = 2
+DEFAULT_DECAY = 7
+DEFAULT_SUSTAIN = 8
+DEFAULT_RELEASE = 3
+DEFAULT_PITCH = 3
 
 # generate a oscillator for each key inside a dictionary
 # {"A4" : SineOscillator
@@ -112,6 +113,9 @@ class MainWidget(
         self.adsr_envelope = ADSREnvelope()
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
+        self.pitch_previous_value = DEFAULT_PITCH
+        self.pitch_start = "C3"
+        self.pitch_end = "C5"
 
         # MIDI stuff here begins here: 
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
@@ -141,7 +145,9 @@ class MainWidget(
         win.decay_knob.valueChanged.connect(self.handle_decay_changed)
         win.sustain_knob.valueChanged.connect(self.handle_sustain_changed)
         win.release_knob.valueChanged.connect(self.handle_release_changed)
+
         win.pitch_knob.valueChanged.connect(self.handle_pitch_changed)
+
         win.tone_knob.valueChanged.connect(self.handle_tone_changed)
         win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 
@@ -190,10 +196,6 @@ class MainWidget(
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
             key.released.connect(self.button_released_handler)
 
-        # VOLUME KNOB
-        # Set up default value of the volume knob
-        win.volume_knob.setValue(DEFAULT_VOLUME)
-
         return win
     
     def play_loop(self, wav):
@@ -220,7 +222,6 @@ class MainWidget(
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
-        
         self.adsr_envelope.update_state(State.ATTACK)
         worker = Worker(self.play_loop, gained_waves[key])
         self.threadpool.start(worker)
@@ -239,9 +240,16 @@ class MainWidget(
         win.release_knob.setValue(DEFAULT_RELEASE)
         win.release_double_spin_box.setValue(DEFAULT_RELEASE)
 
+        # Set up default value of the volume knob
+        win.volume_knob.setValue(DEFAULT_VOLUME)
+
         # Default wave selection
         win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
+
+        #Default pitch
+        win.pitch_knob.setValue(DEFAULT_PITCH)
+        win.pitch_double_spin_box.setValue(DEFAULT_PITCH)
     
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
@@ -249,23 +257,24 @@ class MainWidget(
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
             selected_waves = sine_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((sine_waves[key]))
+            #for key in NOTE_FREQS:
+            #    gained_waves[key] = self.vol_ctrl.change_gain((sine_waves[key]))
         elif selected_waveform == "square":
             selected_waves = square_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((square_waves[key]))
+            #for key in NOTE_FREQS:
+            #    gained_waves[key] = self.vol_ctrl.change_gain((square_waves[key]))
         elif selected_waveform == "sawtooth":
             selected_waves = saw_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((saw_waves[key]))
+            #for key in NOTE_FREQS:
+            #    gained_waves[key] = self.vol_ctrl.change_gain((saw_waves[key]))
         elif selected_waveform == "triangle":
             selected_waves = triangle_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
-        else:
-            QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
-
+            #for key in NOTE_FREQS:
+            #    gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
+        #else:
+        #    QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
     #
     # Handle knob values changed
     #
@@ -292,7 +301,24 @@ class MainWidget(
 
     def handle_pitch_changed(self):
         # Reflect the Pitch spin box value as per the current value of the Pitch dial
-        self.win.pitch_double_spin_box.setValue(self.win.pitch_knob.value())
+        knob_value = self.win.pitch_knob.value()
+        self.win.pitch_double_spin_box.setValue(knob_value)
+        # Calculate the difference between previous knob value and current knob value
+        difference = knob_value - self.pitch_previous_value
+        self.pitch_previous_value = knob_value
+        #Extract note letter from start and end
+        note_name_start = self.pitch_start[:-1]
+        note_name_end = self.pitch_end[:-1]
+        #Extract octave number from start and end
+        note_octave_start = int(self.pitch_start[-1]) 
+        note_octave_end = int(self.pitch_end[-1])
+        #Create the new shifted start and end
+        shifted_note_start = f"{note_name_start}{str(note_octave_start+difference)}"
+        shifted_note_end = f"{note_name_end}{str(note_octave_end+difference)}"
+        #Update the variables for the current pitch range
+        self.pitch_start = shifted_note_start
+        self.pitch_end = shifted_note_end
+
 
     def handle_tone_changed(self):
         # Reflect the Tone spin box value as per the current value of the Tone dial
