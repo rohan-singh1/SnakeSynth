@@ -117,9 +117,7 @@ class MainWidget(
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
 
         #handling blurb for no-device situation 
-        if input_device is not None:
-            pass
-        else:
+        if input_device is None:
             print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
         self.midi_thread = MidiThread(None)
@@ -137,8 +135,6 @@ class MainWidget(
         win = loader.load(ui_file, self)
         ui_file.close()
         self.set_default_values(win)
-
-       
 
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
