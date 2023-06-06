@@ -38,7 +38,6 @@ from midi_detect import identify_and_select_midi_device
 from midi_detect import receive_midi_input
 import pygame
 import sounddevice as sd
-import threading
 import numpy as np
 sd.default.latency = 'low'
 
@@ -88,20 +87,29 @@ class Worker(QRunnable):
 
 # Definition of a class that inherits QObject
 class MidiThread(QObject):
+    pygame.midi.init()
     # Define the start_midi_thread signal
     start_midi_thread = Signal()   # establishes a signal to manipulate 
 
     def __init__(self, input_device):       # construct that is used for instances of MIDITHREAD class
         super().__init__()
+        pygame.midi.init()
         self.input_device = input_device
-
-    def receive_midi_input(self, input_device):
-        # Implementation of receiving MIDI input
-        # ... Put the midi message shit and triggers here 
-        pass
 
     def start(self):
         self.start_midi_thread.emit()
+
+class MidiInputWorker(QRunnable):
+    def __init__(self, input_device):
+        super(MidiInputWorker, self).__init__()
+        pygame.midi.init()
+        self.input_device = input_device
+
+    @Slot()
+    def run(self):
+        for midi_message in receive_midi_input(self.input_device):
+            print("Received MIDI message:", midi_message)
+
 
 class MainWidget(
     QWidget
@@ -118,16 +126,26 @@ class MainWidget(
 
         #handling blurb for no-device situation 
         if input_device is not None:
-            pass
+            # These lines essentially set up the MIDI thread, connect the appropriate method for receiving MIDI input, and start the thread's execution.
+            # This allows the application to receive and process MIDI messages concurrently without blocking the main user interface.
+    
+            # Create an instance of MidiInputWorker
+            self.midi_worker = MidiInputWorker(input_device)
+
+            # Start the MidiInputWorker as a new thread
+            self.threadpool.start(self.midi_worker)
+
+            self.midi_thread = MidiThread(None)
+            # self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
+
+            # Start the MIDI thread
+            self.midi_thread.start()
+            
         else:
             print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
-        self.midi_thread = MidiThread(None)
-        self.midi_thread.start_midi_thread.connect(lambda: self.midi_thread.receive_midi_input(input_device))
-
-        # Start the MIDI thread 
-        self.midi_thread.start()
-        # /end midi stuff
+            # /end midi stuff
+        
         
     def load_ui(self):
         loader = QUiLoader()
