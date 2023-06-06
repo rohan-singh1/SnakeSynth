@@ -58,10 +58,12 @@ def receive_midi_input(midi_input_device):
                 note = data[1]  # The second byte of the MIDI data represents the note value
                 velocity = data[2]  # The third byte of the MIDI data represents the velocity or intensity of the MIDI event
 
-                # Print the MIDI message
-                print(f"Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
-                
-        # More functionality can go here:: :
+                # Print the MIDI message debug line
+               # print("Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
+
+                # More functionality can go here:
+                yield {"status": status, "note": note, "velocity": velocity}
+
 
 
 # How to Call the device detection function once and store it in a variable

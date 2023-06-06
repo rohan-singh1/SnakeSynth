@@ -119,7 +119,7 @@ class MidiInputWorker(QRunnable):
     @Slot()
     def run(self):
         for midi_message in receive_midi_input(self.input_device):
-            print("Received MIDI message:", midi_message)
+            print("Yo! MIDI message:", midi_message)
                 
 
 
