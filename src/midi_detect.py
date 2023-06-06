@@ -60,7 +60,7 @@ def receive_midi_input(midi_input_device):
 
                 # Print the MIDI message
                 print(f"Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
-
+                
         # More functionality can go here:: :
 
 

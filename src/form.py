@@ -17,6 +17,17 @@ The MainWidget class represents the main widget of the synthesizer application. 
 the QWidget class provided by the PySide6 library. The class contains methods for handling UI events, 
 such as button presses, knob changes, and waveform selection.
 
+MidiInputWorker Class
+The MidiInputWorker class is a part of a synthesizer GUI application written in Python using the 
+PySide6 library. 
+This class is responsible for handling MIDI input messages and connecting them to the generation of 
+tones in the synthesizer.
+
+MidiThread Class:
+The MidiThread class is responsible for managing the MIDI input functionality in a separate thread. 
+It initializes the MIDI system using pygame.midi.init() and defines a signal named start_midi_thread. 
+This class is designed to work with the MidiInputWorker class to receive and process MIDI messages
+ concurrently without blocking the main user interface.
 '''
 
 import os
@@ -109,6 +120,7 @@ class MidiInputWorker(QRunnable):
     def run(self):
         for midi_message in receive_midi_input(self.input_device):
             print("Received MIDI message:", midi_message)
+                
 
 
 class MainWidget(
@@ -140,7 +152,7 @@ class MainWidget(
 
             # Start the MIDI thread
             self.midi_thread.start()
-            
+
         else:
             print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
