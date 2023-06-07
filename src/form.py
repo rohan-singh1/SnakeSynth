@@ -47,10 +47,11 @@ MAX_AMPLITUDE = 8192
 DURATION = 0.2
 DEFAULT_VOLUME = 9
 DEFAULT_VOLUME_OFFSET = 9
-DEFAULT_ATTACK = 1
-DEFAULT_DECAY = 2
+DEFAULT_ATTACK = 2
+DEFAULT_DECAY = 7
 DEFAULT_SUSTAIN = 8
-DEFAULT_RELEASE = 5
+DEFAULT_RELEASE = 3
+DEFAULT_PITCH = 3
 
 # generate a oscillator for each key inside a dictionary
 # {"A4" : SineOscillator
@@ -71,6 +72,34 @@ for key in NOTE_FREQS:
 
 selected = sine_waves
 
+#Key names in the GUI
+GUI_KEY_NAMES = [
+    "C3",
+    "C#3",
+    "D3",
+    "D#3",
+    "E3",
+    "F3",
+    "F#3",
+    "G3",
+    "G#3",
+    "A3",
+    "A#3",
+    "B3",
+    "C4",
+    "C#4",
+    "D4",
+    "D#4",
+    "E4",
+    "F4",
+    "F#4",
+    "G4",
+    "G#4",
+    "A4",
+    "A#4",             
+    "B4",               
+    "C5" 
+]
 
 
 #Thread worker
@@ -112,14 +141,42 @@ class MainWidget(
         self.adsr_envelope = ADSREnvelope()
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
+        self.pitch_previous_value = DEFAULT_PITCH
+
+        #default key mapping (matches the key names in the GUI)
+        self.pitch_shifted_keys = [
+            "C3",
+            "C#3",
+            "D3",
+            "D#3",
+            "E3",
+            "F3",
+            "F#3",
+            "G3",
+            "G#3",
+            "A3",
+            "A#3",
+            "B3",
+            "C4",
+            "C#4",
+            "D4",
+            "D#4",
+            "E4",
+            "F4",
+            "F#4",
+            "G4",
+            "G#4",
+            "A4",
+            "A#4",             
+            "B4",               
+            "C5" 
+        ]
 
         # MIDI stuff here begins here: 
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
 
         #handling blurb for no-device situation 
-        if input_device is not None:
-            pass
-        else:
+        if input_device is None:
             print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
         self.midi_thread = MidiThread(None)
@@ -138,14 +195,14 @@ class MainWidget(
         ui_file.close()
         self.set_default_values(win)
 
-       
-
         # Connecting knob values to its corresponding spin box values
         win.attack_knob.valueChanged.connect(self.handle_attack_changed)
         win.decay_knob.valueChanged.connect(self.handle_decay_changed)
         win.sustain_knob.valueChanged.connect(self.handle_sustain_changed)
         win.release_knob.valueChanged.connect(self.handle_release_changed)
+
         win.pitch_knob.valueChanged.connect(self.handle_pitch_changed)
+
         win.tone_knob.valueChanged.connect(self.handle_tone_changed)
         win.volume_knob.valueChanged.connect(self.handle_volume_changed)
 
@@ -194,10 +251,6 @@ class MainWidget(
             key.pressed.connect(lambda note=note: self.button_pressed_handler(note))
             key.released.connect(self.button_released_handler)
 
-        # VOLUME KNOB
-        # Set up default value of the volume knob
-        win.volume_knob.setValue(DEFAULT_VOLUME)
-
         return win
     
     def play_loop(self, wav):
@@ -224,9 +277,13 @@ class MainWidget(
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
-        
+        key_mapping = list(zip(GUI_KEY_NAMES, self.pitch_shifted_keys))
+        for pair in key_mapping:
+            if key == pair[0]:
+                mapped_key = pair[1]
+
         self.adsr_envelope.update_state(State.ATTACK)
-        worker = Worker(self.play_loop, gained_waves[key])
+        worker = Worker(self.play_loop, gained_waves[mapped_key])
         self.threadpool.start(worker)
 
     def button_released_handler(self):
@@ -243,9 +300,16 @@ class MainWidget(
         win.release_knob.setValue(DEFAULT_RELEASE)
         win.release_double_spin_box.setValue(DEFAULT_RELEASE)
 
+        # Set up default value of the volume knob
+        win.volume_knob.setValue(DEFAULT_VOLUME)
+
         # Default wave selection
         win.sine.setChecked(True)
         self.handle_waveform_selected("sine")
+
+        #Default pitch
+        win.pitch_knob.setValue(DEFAULT_PITCH)
+        win.pitch_double_spin_box.setValue(DEFAULT_PITCH)
     
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
@@ -253,23 +317,14 @@ class MainWidget(
         # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
             selected_waves = sine_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((sine_waves[key]))
         elif selected_waveform == "square":
             selected_waves = square_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((square_waves[key]))
         elif selected_waveform == "sawtooth":
             selected_waves = saw_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((saw_waves[key]))
         elif selected_waveform == "triangle":
             selected_waves = triangle_waves
-            for key in NOTE_FREQS:
-                gained_waves[key] = self.vol_ctrl.change_gain((triangle_waves[key]))
-        else:
-            QMessageBox.warning(self, "Invalid Waveform", "Invalid waveform selected!")
-
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
     #
     # Handle knob values changed
     #
@@ -296,7 +351,17 @@ class MainWidget(
 
     def handle_pitch_changed(self):
         # Reflect the Pitch spin box value as per the current value of the Pitch dial
-        self.win.pitch_double_spin_box.setValue(self.win.pitch_knob.value())
+        knob_value = self.win.pitch_knob.value()
+        self.win.pitch_double_spin_box.setValue(knob_value)
+        # Calculate the difference between previous knob value and current knob value
+        difference = knob_value - self.pitch_previous_value
+        self.pitch_previous_value = knob_value
+
+        # update the pitch key list
+        for i, key in enumerate(self.pitch_shifted_keys):
+            note_name = key[:-1]
+            note_octave = int(key[-1])
+            self.pitch_shifted_keys[i] = f"{note_name}{str(note_octave+difference)}"
 
     def handle_tone_changed(self):
         # Reflect the Tone spin box value as per the current value of the Tone dial

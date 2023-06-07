@@ -3,3 +3,4 @@ SciPy
 NumPy
 sounddevice
 pyaudio
+pygame
