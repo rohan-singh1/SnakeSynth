@@ -172,7 +172,6 @@ class MainWidget(
             "C5" 
         ]
 
-
         # MIDI stuff here begins here: 
         input_device = identify_and_select_midi_device() # call device detection function once, and store it in Input_device variable 
 
@@ -278,8 +277,13 @@ class MainWidget(
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
+        key_mapping = list(zip(GUI_KEY_NAMES, self.pitch_shifted_keys))
+        for pair in key_mapping:
+            if key == pair[0]:
+                mapped_key = pair[1]
+
         self.adsr_envelope.update_state(State.ATTACK)
-        worker = Worker(self.play_loop, gained_waves[key])
+        worker = Worker(self.play_loop, gained_waves[mapped_key])
         self.threadpool.start(worker)
 
     def button_released_handler(self):
@@ -353,26 +357,11 @@ class MainWidget(
         difference = knob_value - self.pitch_previous_value
         self.pitch_previous_value = knob_value
 
-        #Extract note letter key mapping
+        # update the pitch key list
         for i, key in enumerate(self.pitch_shifted_keys):
             note_name = key[:-1]
             note_octave = int(key[-1])
             self.pitch_shifted_keys[i] = f"{note_name}{str(note_octave+difference)}"
-        print(self.pitch_shifted_keys)
-        '''
-        note_name_start = self.pitch_start[:-1]
-        note_name_end = self.pitch_end[:-1]
-        #Extract octave number from start and end
-        note_octave_start = int(self.pitch_start[-1]) 
-        note_octave_end = int(self.pitch_end[-1])
-        #Create the new shifted start and end
-        shifted_note_start = f"{note_name_start}{str(note_octave_start+difference)}"
-        shifted_note_end = f"{note_name_end}{str(note_octave_end+difference)}"
-        #Update the variables for the current pitch range
-        self.pitch_start = shifted_note_start
-        self.pitch_end = shifted_note_end
-        '''
-
 
     def handle_tone_changed(self):
         # Reflect the Tone spin box value as per the current value of the Tone dial
