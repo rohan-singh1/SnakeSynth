@@ -140,16 +140,29 @@ class MidiThread(QObject):
         self.start_midi_thread.emit()
 
 class MidiInputWorker(QRunnable):
-    def __init__(self, input_device):
+    def __init__(self, input_device, main_widget):
         super(MidiInputWorker, self).__init__()
         pygame.midi.init()
         self.input_device = input_device
+        self.main_widget = main_widget
 
     @Slot()
     def run(self):
         for midi_message in receive_midi_input(self.input_device):
-            print("Yo! MIDI message:", midi_message)
-                
+            print("Yo! MIDI message:", midi_message) # debag line
+            
+            if midi_message["status"] == 144: # This is the note on message
+                note_value = midi_message["note"]
+                if note_value >= 24 and note_value < 52: 
+                    try:
+                        note_name = self.main_widget.pitch_shifted_keys[note_value - 24]
+                        print("MIDI KEY NOTE PLAYED:", note_name)
+                        self.main_widget.button_pressed_handler(note_name)
+                    except IndexError:
+                        print("Note value is out of range. Ignoring MIDI message.")
+                    
+            elif midi_message["status"] == 128: # note off message
+                self.main_widget.button_released_handler() 
 
 
 class MainWidget(
@@ -201,7 +214,7 @@ class MainWidget(
             # This allows the application to receive and process MIDI messages concurrently without blocking the main user interface.
     
             # Create an instance of MidiInputWorker
-            self.midi_worker = MidiInputWorker(input_device)
+            self.midi_worker = MidiInputWorker(input_device, self)
 
             # Start the MidiInputWorker as a new thread
             self.threadpool.start(self.midi_worker)
@@ -213,8 +226,7 @@ class MainWidget(
             self.midi_thread.start()
 
         else:
-        if input_device is None:
-            print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
+                print("No MIDI device selected. Check Connections or Rock the SNAKESynth GUI")  # readout for no MIDI device situation 
 
             # /end midi stuff
         
