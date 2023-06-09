@@ -375,9 +375,21 @@ class MainWidget(
         self.adsr_envelope.update_release(value)
 
     def handle_pitch_changed(self):
-        # Reflect the Pitch spin box value as per the current value of the Pitch dial
         knob_value = self.win.pitch_knob.value()
-        self.win.pitch_double_spin_box.setValue(knob_value)
+
+        # Only allow the user to use the knob to change the pitch value by one unit
+        if (
+            knob_value != self.pitch_previous_value + 1
+            and knob_value != self.pitch_previous_value - 1
+        ):
+            self.win.pitch_double_spin_box.setValue(self.pitch_previous_value)
+            self.win.pitch_knob.setValue(self.pitch_previous_value)
+        else:
+            # Reflect the Pitch spin box value as per the current value of the Pitch dial
+            self.win.pitch_double_spin_box.setValue(knob_value)
+
+        knob_value = self.win.pitch_knob.value()
+
         # Calculate the difference between previous knob value and current knob value
         difference = knob_value - self.pitch_previous_value
         self.pitch_previous_value = knob_value
