@@ -17,7 +17,7 @@ from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QSize
 
 WINDOW_WIDTH = 1001
-WINDOW_HEIGHT = 550
+WINDOW_HEIGHT = 590
 
 if __name__ == "__main__":
     app = QApplication([])
