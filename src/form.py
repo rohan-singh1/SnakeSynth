@@ -398,7 +398,8 @@ class MainWidget(
         for i, key in enumerate(self.pitch_shifted_keys):
             note_name = key[:-1]
             note_octave = int(key[-1])
-            self.pitch_shifted_keys[i] = f"{note_name}{str(note_octave+difference)}"
+            new_octave = note_octave+difference
+            self.pitch_shifted_keys[i] = f"{note_name}{str(new_octave)}"
 
     def handle_bass_changed(self):
         # Reflect the Bass spin box value as per the current value of the Bass dial
