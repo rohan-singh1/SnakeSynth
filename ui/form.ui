@@ -916,7 +916,7 @@ border: none;</string>
             <string notr="true">background-color: qlineargradient(spread:repeat, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(111, 111, 111, 255));</string>
            </property>
            <property name="maximum">
-            <number>10</number>
+            <number>7</number>
            </property>
            <property name="pageStep">
             <number>1</number>
@@ -928,7 +928,7 @@ border: none;</string>
             <bool>false</bool>
            </property>
            <property name="notchTarget">
-            <double>10.000000000000000</double>
+            <double>7.000000000000000</double>
            </property>
            <property name="notchesVisible">
             <bool>true</bool>
