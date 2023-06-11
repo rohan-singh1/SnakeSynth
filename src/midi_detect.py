@@ -63,7 +63,7 @@ def receive_midi_input(midi_input_device):
 
                 # More functionality can go here:
                 yield {"status": status, "note": note, "velocity": velocity}
-
+    #pygame.midi.quit()  # quit Pygame MIDI module 
 
 
 # How to Call the device detection function once and store it in a variable
