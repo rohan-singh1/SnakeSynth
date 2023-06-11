@@ -171,9 +171,19 @@ GUI_KEY_NAMES = [
             "A5",
             "A#5",
             "B5",
-            "C6"
-]
-
+            "C6",
+            "D6",
+            "D#6",
+            "E6",
+            "F6",
+            "F#6",
+            "G6",
+            "G#6",
+            "A6",
+            "A#6",
+            "B6",
+            "C7"
+        ]
 
 # Thread worker
 class Worker(QRunnable):
@@ -219,7 +229,7 @@ class MidiInputWorker(QRunnable):
             
             if midi_message["status"] == 144: # This is the note on message
                 note_value = midi_message["note"]
-                if note_value >= 24 and note_value < 85: 
+                if note_value >= 12 and note_value < 122: 
                     try:
                         note_name = self.main_widget.pitch_shifted_keys[note_value - 24]
                         print("MIDI KEY NOTE PLAYED:", note_name)
@@ -315,7 +325,18 @@ class MainWidget(
             "A5",
             "A#5",
             "B5",
-            "C6"
+            "C6",
+            "D6",
+            "D#6",
+            "E6",
+            "F6",
+            "F#6",
+            "G6",
+            "G#6",
+            "A6",
+            "A#6",
+            "B6",
+            "C7"
         ]
 
         # MIDI stuff here begins here:
