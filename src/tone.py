@@ -24,24 +24,19 @@ To use the Tone class, follow these steps:
 
 from scipy import io, signal
 import numpy as np
-import sounddevice as sd
 
 DEFAULT_GAIN = 1.0
 DEFAULT_KNOB_VAL = 5
 
 class Tone():
-    def __init__(self, bass_knob=DEFAULT_KNOB_VAL, mid_knob=DEFAULT_KNOB_VAL, treble_knob=DEFAULT_KNOB_VAL, first_stop=200, second_stop=2000, rate=48000):
+    def __init__(self, bass_knob=DEFAULT_KNOB_VAL, mid_knob=DEFAULT_KNOB_VAL, treble_knob=DEFAULT_KNOB_VAL, first_stop=100, second_stop=2000, rate=48000):
         self._first_stop = first_stop
         self._second_stop = second_stop
         self._rate = rate
 
-        self._bass_knob = bass_knob
-        self._mid_knob = mid_knob
-        self._treble_knob = treble_knob
-
         self._bass_filter = Filter('lowpass', rate, bass_knob, [first_stop] )
         self._mid_filter = Filter('bandpass', rate, mid_knob, [first_stop, second_stop])
-        self._treble_filter = Filter('highpass', rate, mid_knob, [second_stop])
+        self._treble_filter = Filter('highpass', rate, treble_knob, [second_stop])
 
     def set_bass(self, knob_value):
         self._bass_filter.config(knob_value)
@@ -50,7 +45,7 @@ class Tone():
         self._mid_filter.config(knob_value)
 
     def set_treble(self, knob_value):
-        self._treble_filter.confg(knob_value)
+        self._treble_filter.config(knob_value)
 
     def filter(self, samples):
         low_passed = self._bass_filter.filter(samples)
@@ -73,22 +68,27 @@ class Filter():
         self._knob_value = knob_value
         self._splits = splits
         self._gain = DEFAULT_GAIN
-        self.generate_coeff()
+        self._coeff = self.generate_coeff()
 
-    # Build filters.
+    #Build filters coefficients
     def generate_coeff(self):
+        print(self._type)
+        print(self._rate)
+        print(self._splits)
+        print(self._gain)
         freqs = 2.0 * np.array(self._splits, dtype=np.float64) / self._rate
-        self._coeff = signal.firwin(255, freqs, pass_zero=self._type)
+        return signal.firwin(255, freqs, pass_zero=self._type)
     
     #Filter sound wave
     def filter(self, samples):
-        return signal.lfilter(self._coeff, self._splits,  samples) * self._gain
+        return signal.lfilter(self._coeff, [1],  samples) * self._gain
 
 
     #set gain
     def config(self, knob_value):
         self._knob_value = knob_value
         self._gain = self.tone_gain_converter(knob_value)
+        print(self._gain)
 
     # Convert from knob value to gain value for tone
     def tone_gain_converter(self, knob_value):

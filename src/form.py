@@ -68,6 +68,7 @@ DEFAULT_FILTER_KNOB = 5
 # ...
 # }
 # Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
+gained_waves = {}
 sine_waves = {}
 square_waves = {}
 saw_waves = {}
@@ -308,7 +309,7 @@ class MainWidget(
                 mapped_key = pair[1]
 
         self.adsr_envelope.update_state(State.ATTACK)
-        worker = Worker(self.play_loop, selected_waves[mapped_key])
+        worker = Worker(self.play_loop, gained_waves[mapped_key])
         self.threadpool.start(worker)
 
     def button_released_handler(self):
@@ -347,6 +348,9 @@ class MainWidget(
             selected_waves = saw_waves
         elif selected_waveform == "triangle":
             selected_waves = triangle_waves
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
+            gained_waves[key] = self.tone_ctrl.filter(selected_waves[key])
 
     #
     # Handle knob values changed
@@ -401,16 +405,28 @@ class MainWidget(
 
     def handle_bass_changed(self):
         # Reflect the Bass spin box value as per the current value of the Bass dial
-        self.win.bass_double_spin_box.setValue(self.win.bass_knob.value())
+        knob_value = self.win.bass_knob.value()
+        self.win.bass_double_spin_box.setValue(knob_value)
+        self.tone_ctrl.set_bass(knob_value)
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.tone_ctrl.filter(selected_waves[key])
 
     def handle_mid_changed(self):
         # Reflect the Mid spin box value as per the current value of the Mid dial
-        self.win.mid_double_spin_box.setValue(self.win.mid_knob.value())
+        knob_value = self.win.mid_knob.value()
+        self.win.mid_double_spin_box.setValue(knob_value)
+        self.tone_ctrl.set_mid(knob_value)
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.tone_ctrl.filter(selected_waves[key])
+
 
     def handle_treble_changed(self):
         # Reflect the Treble spin box value as per the current value of the Treble dial
-        self.win.treble_double_spin_box.setValue(self.win.treble_knob.value())
-
+        knob_value = self.win.treble_knob.value()
+        self.win.treble_double_spin_box.setValue(knob_value)
+        self.tone_ctrl.set_treble(knob_value)
+        for key in NOTE_FREQS:
+            gained_waves[key] = self.tone_ctrl.filter(selected_waves[key])
     # Whenever the knob is turned, get the new gain coefficient then apply to all keys
     def handle_volume_changed(self):
         knob_value = self.win.volume_knob.value()
