@@ -66,7 +66,6 @@ DEFAULT_PITCH = 3
 # ...
 # }
 # Note: due to saw wave and square wave implementation, generating them takes a lot longer, might need rework in the future.
-gained_waves = {}
 sine_waves = {}
 square_waves = {}
 saw_waves = {}
@@ -158,7 +157,7 @@ class MainWidget(
     def __init__(self):
         super(MainWidget, self).__init__()
         self.vol_ctrl = Volume(DEFAULT_VOLUME, DEFAULT_VOLUME_OFFSET)
-        self.adsr_envelope = ADSREnvelope()
+        self.adsr_envelope = ADSREnvelope(DEFAULT_ATTACK, DEFAULT_DECAY, DEFAULT_SUSTAIN, DEFAULT_RELEASE)
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
         self.pitch_previous_value = DEFAULT_PITCH
@@ -297,7 +296,7 @@ class MainWidget(
             out_buffer = np.empty(len(wav))
             for i in range(len(wav)):
                 out_buffer[i] = self.adsr_envelope.process(wav[i])
-            stream.write(out_buffer.astype(np.int16))
+            stream.write(self.vol_ctrl.change_gain(out_buffer.astype(np.int16)))
 
     # Define a method for handling button releases
     def button_pressed_handler(self, key):
@@ -307,7 +306,7 @@ class MainWidget(
                 mapped_key = pair[1]
 
         self.adsr_envelope.update_state(State.ATTACK)
-        worker = Worker(self.play_loop, gained_waves[mapped_key])
+        worker = Worker(self.play_loop, selected_waves[mapped_key])
         self.threadpool.start(worker)
 
     def button_released_handler(self):
@@ -338,7 +337,6 @@ class MainWidget(
     # Handle different wave types
     def handle_waveform_selected(self, selected_waveform):
         global selected_waves
-        # Update the gained_waves dictionary based on the selected waveform
         if selected_waveform == "sine":
             selected_waves = sine_waves
         elif selected_waveform == "square":
@@ -347,8 +345,6 @@ class MainWidget(
             selected_waves = saw_waves
         elif selected_waveform == "triangle":
             selected_waves = triangle_waves
-        for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
 
     #
     # Handle knob values changed
@@ -419,8 +415,6 @@ class MainWidget(
         self.win.volume_double_spin_box.setValue(knob_value)
         print(knob_value)
         self.vol_ctrl.config(knob_value)
-        for key in NOTE_FREQS:
-            gained_waves[key] = self.vol_ctrl.change_gain(selected_waves[key])
 
     #
     # Handle spin box values changed

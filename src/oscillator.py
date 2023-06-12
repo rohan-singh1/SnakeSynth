@@ -20,8 +20,6 @@ such as frequency, sample rate, amplitude, and duration.
 
 from abc import ABC
 import numpy as np
-import sounddevice as sd
-import pyaudio
 
 class Oscillator(ABC):
     def __init__(
@@ -31,22 +29,15 @@ class Oscillator(ABC):
         amplitude=np.iinfo(np.int16).max / 4,
         duration=1.0,
     ):
-        p = pyaudio.PyAudio()
         self._frequency: float = frequency
         self._sample_rate: int = sample_rate
         self._amplitude: float = amplitude
         self._duration: float = duration
         self._step_size: float = 2.0 * np.pi * self._frequency / sample_rate
         self._time = np.arange(int(self._sample_rate * self._duration))
-        self._samples = np.array(0)
-        self._gained_samples = np.array(0)
 
     def generate_wave(self):
         pass
-
-    def play(self):
-        sd.play(self._gained_samples.astype(np.int16), self._sample_rate)
-        print(self._samples[-1])
 
     # Crop the samples to the final zero crossing, so that the end of a wave match up with the beginning
     # Side effects: final signal is very slightly shorter.
@@ -55,10 +46,6 @@ class Oscillator(ABC):
         remainder = round(self._time.size % samples_per_period)
 
         return samples[0 : self._time.size - remainder]
-
-    def stop(self):
-        sd.stop()
-
 
 # SINE OSCILLATOR
 class SineOscillator(Oscillator):
@@ -75,12 +62,9 @@ class SineOscillator(Oscillator):
             amplitude=amplitude,
             duration=duration,
         )
-        self._samples = self.generate_wave()
-        self._gained_samples = self._samples
 
     def generate_wave(self):
         samples = self._amplitude * np.sin(self._step_size * self._time)
-
         return self.crop_samples(samples).astype(np.int16)
 
 
@@ -98,8 +82,6 @@ class SquareOscillator(SineOscillator):
             amplitude=amplitude,
             duration=duration,
         )
-        self._samples = self.generate_wave()
-        self._gained_samples = self._samples
 
     def generate_wave(self):
         samples = np.sin(self._step_size * self._time)
@@ -128,8 +110,6 @@ class TriangleOscillator(Oscillator):
             amplitude=amplitude,
             duration=duration,
         )
-        self._samples = self.generate_wave()
-        self._gained_samples = self._samples
 
     def generate_wave(self):
         samples = np.empty(int(self._sample_rate * self._duration), dtype=float)
@@ -166,9 +146,7 @@ class SawtoothOscillator(Oscillator):
             amplitude=amplitude,
             duration=duration,
         )
-        self._samples = self.generate_wave()
-        self._gained_samples = self._samples
-
+        
     def generate_wave(self):
         samples = np.arange(self._sample_rate * self._duration)
 
