@@ -41,6 +41,7 @@ from oscillator import (
 from adsr import ADSREnvelope, State
 from notefreq import NOTE_FREQS
 from volume import Volume
+from tone import Tone
 from midi_detect import identify_and_select_midi_device
 from midi_detect import receive_midi_input
 import pygame
@@ -60,6 +61,7 @@ DEFAULT_DECAY = 7
 DEFAULT_SUSTAIN = 8
 DEFAULT_RELEASE = 3
 DEFAULT_PITCH = 3
+DEFAULT_FILTER_KNOB = 5
 
 # generate a oscillator for each key inside a dictionary
 # {"A4" : SineOscillator
@@ -116,7 +118,6 @@ GUI_KEY_NAMES = [
     "C5",
 ]
 
-
 # Thread worker
 class Worker(QRunnable):
     def __init__(self, fn, *args, **kwargs):
@@ -158,6 +159,7 @@ class MainWidget(
         super(MainWidget, self).__init__()
         self.vol_ctrl = Volume(DEFAULT_VOLUME, DEFAULT_VOLUME_OFFSET)
         self.adsr_envelope = ADSREnvelope(DEFAULT_ATTACK, DEFAULT_DECAY, DEFAULT_SUSTAIN, DEFAULT_RELEASE)
+        self.tone_ctrl = Tone(DEFAULT_FILTER_KNOB, DEFAULT_FILTER_KNOB, DEFAULT_FILTER_KNOB)
         MainWidget.win = self.load_ui()
         self.threadpool = QThreadPool()
         self.pitch_previous_value = DEFAULT_PITCH
