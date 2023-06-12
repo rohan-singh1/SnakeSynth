@@ -316,9 +316,6 @@ class MainWidget(
             self.adsr_envelope.update_state(State.ATTACK)
             worker = Worker(self.play_loop, gained_waves[mapped_key])
             self.threadpool.start(worker)
-        else:
-            # ignore and continue in NONE case  
-            pass 
 
     def button_released_handler(self):
         self.adsr_envelope.update_state(State.RELEASE)
