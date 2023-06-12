@@ -92,6 +92,8 @@ class ADSREnvelope:
                 if self._pos >= self._release_samples:
                     self.update_state(State.IDLE)
                 return output
+            else:
+                return 0
             
         except IndexError:          #if knob is turned to 0 
             return          #return without applying that part of the envelope
