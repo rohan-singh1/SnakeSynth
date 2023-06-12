@@ -427,6 +427,7 @@ class MainWidget(
         self.tone_ctrl.set_treble(knob_value)
         for key in NOTE_FREQS:
             gained_waves[key] = self.tone_ctrl.filter(selected_waves[key])
+            
     # Whenever the knob is turned, get the new gain coefficient then apply to all keys
     def handle_volume_changed(self):
         knob_value = self.win.volume_knob.value()
