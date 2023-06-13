@@ -124,7 +124,7 @@ class Worker(QRunnable):
         self.fn(self.args[0])
 
 
-# Definition of a class that inherits QObject
+# Definition of MidiThread class that inherits QObject
 class MidiThread(QObject):
     pygame.midi.init()
     # Define the start_midi_thread signal
@@ -143,14 +143,14 @@ class MidiThread(QObject):
 class MidiInputWorker(QRunnable):
     def __init__(self, input_device, main_widget):
         super(MidiInputWorker, self).__init__()
-        pygame.midi.init()
+        
         self.input_device = input_device
         self.main_widget = main_widget
 
     @Slot()
     def run(self):
         for midi_message in receive_midi_input(self.input_device):
-            print("Yo! MIDI message:", midi_message) # debag line
+            # print("Yo! MIDI message:", midi_message) # debag line
             
             if midi_message["status"] == 144: # This is the note on message
                 note_value = midi_message["note"]
@@ -187,6 +187,7 @@ class MainWidget(
 
 
         # MIDI stuff here begins here:
+        pygame.midi.init()
         input_device = (
             identify_and_select_midi_device()
         )  # call device detection function once, and store it in Input_device variable

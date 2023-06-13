@@ -21,10 +21,6 @@ It yields a dictionary containing the extracted MIDI data for further processing
 The loop continues until the running flag is set to False.
 """
 
-
-
-
-
 import pygame.midi
 
 def identify_and_select_midi_device():
@@ -68,6 +64,9 @@ def identify_and_select_midi_device():
 
 def receive_midi_input(midi_input_device):
     # Main loop to receive MIDI input
+    if pygame.midi.get_init() == False:
+        raise RuntimeError("pygame.midi not initialised.")
+    
     running = True
     while running:
         # Check if there are any MIDI messages available
@@ -86,13 +85,11 @@ def receive_midi_input(midi_input_device):
                 velocity = data[2]  # The third byte of the MIDI data represents the velocity or intensity of the MIDI event
 
                 # Print the MIDI message debug line
-               # print("Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
+                # print("Received MIDI message: Status={status}, Note={note}, Velocity={velocity}")
 
-                # More functionality can go here:
+                # More Functionality can go here:
                 yield {"status": status, "note": note, "velocity": velocity}
-    pygame.midi.quit()  # quit Pygame MIDI module 
-
-
+    
 # How to Call the device detection function once and store it in a variable
 # input_device = identify_and_select_midi_device()
 
