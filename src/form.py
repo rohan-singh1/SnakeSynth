@@ -27,7 +27,7 @@ MidiThread Class:
 The MidiThread class is responsible for managing the MIDI input functionality in a separate thread. 
 It initializes the MIDI system using pygame.midi.init() and defines a signal named start_midi_thread. 
 This class is designed to work with the MidiInputWorker class to receive and process MIDI messages
- concurrently without blocking the main user interface.
+concurrently without blocking the main user interface.
 """
 
 import os
