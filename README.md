@@ -50,7 +50,7 @@ _____
 
 ### License
 
-[LICENSE](https://gitlab.cecs.pdx.edu/snakesynth/snakesynth/-/blob/main/LICENSE)
+[LICENSE](LICENSE)
 _____
 ### SnakeSynth UI
 
